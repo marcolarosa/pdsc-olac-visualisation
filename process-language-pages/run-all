@@ -1,0 +1,5 @@
+#!/bin/bash
+
+OUTPUT="../data"
+
+./process-language-pages.py --languages languages.csv --pages http://www.language-archives.org/language --output $OUTPUT --info
