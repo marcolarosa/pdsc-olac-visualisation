@@ -9,7 +9,13 @@ from lxml import html, etree
 import json
 
 class ProcessLanguage:
-    def __init__(self, pages, code, output):
+    def __init__(self, pages, code, coords, output):
+        log.info("%s %s" % (olac_code, coords))
+        self.language_resources = {
+            'olac_code': olac_code,
+            'coords': coords
+        }
+
         self.page = os.path.join(pages, code)
         self.olac_code = code
         self.output = output
@@ -24,7 +30,8 @@ class ProcessLanguage:
             log.error("Couldn't get: %s" % self.page)
             return
 
-        language_resources['name'] = self.page.find('//body/table[@class="doc_header"]/tr/td[2]').text_content()
+        name = self.page.find('//body/table[@class="doc_header"]/tr/td[2]').text_content()
+        self.language_resources['name'] = name.replace('OLAC resources in and about the ', '')
         for e in self.page.findall('//ol'):
             resource = e.getprevious().text_content()
             resource_list = e.findall('li')
@@ -34,14 +41,14 @@ class ProcessLanguage:
             for l in resource_list:
                 r.append(etree.tostring(l))
 
-            language_resources[resource] = {
+            self.language_resources[resource] = {
                 'count': len(resource_list),
                 'resources': r
             }
 
             # write the data out
             with open(os.path.join(self.output, "%s.json" % self.olac_code), 'w') as f:
-                f.write(json.dumps(language_resources))
+                f.write(json.dumps(self.language_resources))
 
 if __name__ == "__main__":
 
@@ -84,25 +91,13 @@ if __name__ == "__main__":
             except IndexError:
                 continue
 
-            language_resources = {}
-
             if args.one is not None:
                 if args.one == olac_code:
-                    # process only the requested one
-                    log.info("%s %s %s %s" % (n, olac_code, name, coords))
-                    language_resources['olac_code'] = olac_code
-                    language_resources['coords'] = coords
-
-                    p = ProcessLanguage(args.pages, olac_code, args.output)
+                    p = ProcessLanguage(args.pages, olac_code, coords, args.output)
                     p.process()
 
             else:
                 # for each language in the csv
-                log.info("%s %s %s %s" % (n, olac_code, name, coords))
-                language_resources['olac_code'] = olac_code
-                language_resources['coords'] = coords
-
-                p = ProcessLanguage(args.pages, olac_code, args.output)
+                p = ProcessLanguage(args.pages, olac_code, coords, args.output)
                 p.process()
  
-
