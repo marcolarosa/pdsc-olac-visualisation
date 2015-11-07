@@ -58,7 +58,8 @@ if __name__ == "__main__":
     parser.add_argument('--languages', dest='languages', help='The path to the CSV file containing the language codes', required=True)
     parser.add_argument('--pages',     dest='pages',     help='The base pages URL: Probably: http://www.language-archives.org/language', required=True)
     parser.add_argument('--output',    dest='output',    help='The folder to store the JSON representation.', required=True)
-    parser.add_argument('--one',       dest='one',       help='Process only one language code.')
+    parser.add_argument('--one',       dest='one',       help='Process only one language code.', action='store_true')
+    parser.add_argument('--refresh',   dest='refresh',   help='Ignore data and reprocess.',      action='store_true')
 
     parser.add_argument('--info', dest='info', action='store_true', help='Turn on informational messages')
     parser.add_argument('--debug', dest='debug', action='store_true', help='Turn on full debugging (includes --info)')
@@ -91,13 +92,15 @@ if __name__ == "__main__":
             except IndexError:
                 continue
 
-            if args.one is not None:
+            if args.one:
                 if args.one == olac_code:
-                    p = ProcessLanguage(args.pages, olac_code, coords, args.output)
-                    p.process()
+                    if not os.path.exists(os.path.join(args.output, "%s.json" % olac_code)) or args.refresh:
+                        p = ProcessLanguage(args.pages, olac_code, coords, args.output)
+                        p.process()
 
             else:
                 # for each language in the csv
-                p = ProcessLanguage(args.pages, olac_code, coords, args.output)
-                p.process()
+                if not os.path.exists(os.path.join(args.output, "%s.json" % olac_code)) or args.refresh:
+                    p = ProcessLanguage(args.pages, olac_code, coords, args.output)
+                    p.process()
  
