@@ -11,14 +11,16 @@ import json
 class ProcessLanguage:
     def __init__(self, pages, code, coords, output):
         log.info("%s %s" % (olac_code, coords))
-        self.language_resources = {
-            'olac_code': olac_code,
-            'coords': coords
-        }
-
         self.page = os.path.join(pages, code)
         self.olac_code = code
         self.output = output
+
+        self.language_resources = {
+            'code': olac_code,
+            'coords': coords,
+            'url': self.page
+        }
+
         log.debug(self.page)
 
     def process(self):
@@ -32,6 +34,8 @@ class ProcessLanguage:
 
         name = self.page.find('//body/table[@class="doc_header"]/tr/td[2]').text_content()
         self.language_resources['name'] = name.replace('OLAC resources in and about the ', '')
+
+        resources = {}
         for e in self.page.findall('//ol'):
             resource = e.getprevious().text_content()
             resource_list = e.findall('li')
@@ -41,14 +45,15 @@ class ProcessLanguage:
             for l in resource_list:
                 r.append(etree.tostring(l))
 
-            self.language_resources[resource] = {
+            resources[resource] = {
                 'count': len(resource_list),
                 'resources': r
             }
 
-            # write the data out
-            with open(os.path.join(self.output, "%s.json" % self.olac_code), 'w') as f:
-                f.write(json.dumps(self.language_resources))
+        # write the data out
+        self.language_resources['resources'] = resources
+        with open(os.path.join(self.output, "%s.json" % self.olac_code), 'w') as f:
+            f.write(json.dumps(self.language_resources))
 
 if __name__ == "__main__":
 
