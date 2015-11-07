@@ -14,22 +14,20 @@ class CreateSummary:
 
     def process(self):
         # delete previous summaries if any
-        for summary in [ 'index.json', 'regions.json', 'countries.json' ]:
-            summary_file = os.path.join(self.languages, summary)
-            if os.path.exists(summary_file):
-                os.remove(summary_file)
-
+        summary_file = os.path.join(self.languages, 'index.json')
         summary = []
         for root, dirs, files in os.walk(self.languages):
-            for f in files:
-                log.info("Processing: %s" % os.path.join(f));
+            for fname in files:
+                log.info("Processing: %s" % fname);
 
-                with open(os.path.join(root, f), 'r') as f:
+                with open(os.path.join(root, fname), 'r') as f:
                     data = json.loads(f.read())
                     s = {
                         'name': data['name'],
-                        'url': data['url'],
                         'coords': data['coords'],
+                        'code': fname.rstrip('.json'),
+                        'file': fname,
+                        'url': data['url']
                     }
                     r = {}
                     for resource in data['resources']:
@@ -120,6 +118,11 @@ if __name__ == "__main__":
 
     # get the logger
     log = logging.getLogger('LANGUAGE_PROCESSOR')
+
+    for summary in [ 'index.json', 'regions.json', 'countries.json' ]:
+        summary_file = os.path.join(args.languages, summary)
+        if os.path.exists(summary_file):
+            os.remove(summary_file)
 
     # create summary file
     s = CreateSummary(args.languages)
