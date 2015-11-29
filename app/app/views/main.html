@@ -2,7 +2,7 @@
     <md-content>
         <md-card>
             <md-card-content>
-                <leaflet width="100%" height="480px"></leaflet>
+                <leaflet width="100%" height="480px" markers="markers"></leaflet>
             </md-card-content>
         </md-card>
     </md-content>
@@ -11,32 +11,32 @@
             <md-content flex="50" layout-padding>
                 <h4>Countries</h4>
                 <md-autocomplete
-                    md-items="item in searchCountries(item)"
-                    md-item-text="item.name"
-                    md-search-text="item.name"
+                    md-items="country in searchCountries(country)"
+                    md-item-text="country.name"
+                    md-search-text="country.name"
                     md-selected-item="selected.country"
                     md-min-length="0"
                     placeholder="Browse by Country"
                     md-no-cache="true"
                 >
                     <md-item-template>
-                        {{item.name}}
+                        {{country.name}}
                     </md-item-template>
                 </md-autocomplete>
             </md-content>    
             <md-content flex="50" layout-padding>
                 <h3>Languages</h3>
                 <md-autocomplete
-                    md-items="item in searchLanguages(item)"
-                    md-item-text="item.name"
-                    md-search-text="item.name"
+                    md-items="language in searchLanguages(language)"
+                    md-item-text="language.name"
+                    md-search-text="language.name"
                     md-selected-item="selected.language"
                     md-min-length="0"
                     placeholder="Browse by Language"
                     md-no-cache="true"
                 >
                     <md-item-template>
-                        {{item.name}}
+                        {{language.name}}
                     </md-item-template>
                 </md-autocomplete>
             </md-content>    
