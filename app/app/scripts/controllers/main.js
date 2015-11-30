@@ -8,10 +8,32 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-  .controller('MainCtrl', [ '$scope', '$http', function ($scope, $http) {
-      $scope.$watch('selected', function() {
-          if ($scope.selected) console.log($scope.selected);
-      }, true);
+  .controller('MainCtrl', [ '$scope', '$http', '$window', function ($scope, $http, $window) {
+      console.log($window.innerHeight);
+      $scope.mapHeight = $window.innerHeight * 0.8;
+
+      $scope.layers = {
+          baselayers: {
+              osm: {
+                  name: 'OpenStreetMap',
+                  type: 'xyz',
+                  url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  layerParams: {
+                      noWrap: true,
+                  }
+              }
+          },
+          overlays: {
+              realworld: {
+                  name: "Real world data",
+                  type: "markercluster",
+                  visible: true,
+                  layerParams: {
+                      zoom: 4
+                  }
+              }
+          }
+      }
       $scope.selected = {};
       $scope.datasets = {
           'languages': undefined,
@@ -45,21 +67,23 @@ angular.module('appApp')
               try {
                   if (parseFloat(l.coords[0])  && parseFloat(l.coords[2])) {
                       return { 
-                          lat: parseFloat(l.coords[0]),
+                          layer: 'realworld',  
+                          lat: parseFloat(l.coords[0]), 
                           lng: parseFloat(l.coords[2]),
                           message: l.name
-                      }
+                      }; 
                   }
               } catch (e) {
                   // do nothing
               }
           });
-          $scope.markers = {};
-          markers = _.groupBy(_.compact(markers).slice(0,500), 'message');
-          _.each(markers, function(m, i) {
-              $scope.markers[_.camelCase(i)] = m[0];
-          });
-          console.log($scope.markers);
+          $scope.markers = _.compact(markers.slice(0,100));
+
+          //markers = _.groupBy(_.compact(markers).slice(0,100), 'message');
+          //_.each(markers, function(m, i) {
+          //    $scope.markers[_.camelCase(i)] = m[0];
+          //});
+          //console.log($scope.markers);
       });
       $http.get('/data/regions.json').then(function(resp) {
           console.log('Regions', resp.data);
