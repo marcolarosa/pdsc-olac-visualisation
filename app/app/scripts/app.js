@@ -21,7 +21,7 @@ angular
     'ngMaterial',
     'leaflet-directive',
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $logProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -36,4 +36,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+      // disable debug logging
+      $logProvider.debugEnabled(false);
   });
