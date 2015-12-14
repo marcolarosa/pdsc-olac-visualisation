@@ -4,3 +4,12 @@
     left: 78%;
     z-index: 10000;
 }
+
+md-sidenav, 
+md-sidenav.md-locked-open, 
+md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 304px !important;
+    width: 85vw !important;
+    max-width: 600px !important;
+} 
+

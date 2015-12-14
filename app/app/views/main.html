@@ -1,5 +1,4 @@
 <div layout="column">
-    <marker-legend colours="colours"></marker-legend>
     <md-content>
         <md-card>
             <md-card-content>
@@ -7,8 +6,18 @@
             </md-card-content>
         </md-card>
     </md-content>
+    <md-fab-speed-dial class="md-fab-bottom-right" style="z-index: 10000;">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn" ng-click="toggleSideNav()">
+                <i class="material-icons md-48">add</i>
+            </md-button>
+        </md-fab-trigger>
+    </md-fab-speed-dial>
+</div>
+
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="z-index: 10000;">
     <md-content>
-        <div layout="row" layout-padding>
+        <div layout="column" layout-padding>
             <md-content flex="50" layout-padding>
                 <h4>Countries</h4>
                 <md-autocomplete
@@ -43,4 +52,4 @@
             </md-content>    
         </div> 
     </md-content>
-</div>
+</md-sidenav>

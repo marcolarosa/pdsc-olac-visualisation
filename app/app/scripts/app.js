@@ -17,11 +17,13 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch',
     'ngMaterial',
     'leaflet-directive',
   ])
-  .config(function ($routeProvider, $logProvider) {
+  .config([
+    '$routeProvider',
+    '$logProvider',
+  function ($routeProvider, $logProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -39,4 +41,5 @@ angular
 
       // disable debug logging
       $logProvider.debugEnabled(false);
-  });
+
+  }]);

@@ -8,8 +8,10 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-  .controller('MainCtrl', [ '$scope', '$http', '$window', function ($scope, $http, $window) {
-      $scope.mapHeight = $window.innerHeight * 0.8;
+  .controller('MainCtrl', [ 
+    '$scope', '$http', '$window', '$mdSidenav',
+    function ($scope, $http, $window, $mdSidenav) {
+      $scope.mapHeight = $window.innerHeight * 0.95;
 
       $scope.layers = {
           baselayers: {
@@ -75,34 +77,33 @@ angular.module('appApp')
           console.log(counts.sort(function(a, b) {
               return a - b;
           }));
-          var min = _.min(counts);
-          var max = _.max(counts);
-          var mapRange = d3.scale.linear()
-                            .domain([0, 100])
-                            .range([1, 10]);
-
-
-          var thirds = max / 3;
 
           // 5 x reds, 5 x greens
           //$scope.colours = [ '#ea1540', '#dc143c', '#d21339', '#bb1133', '#a40f2d',
           //                '#2eb82e', '#29a329', '#248f24', '#1f7a1f', '#196619' ];
 
-          $scope.colours = [ '#a40f2d', '#bb1133', '#d21339', '#dc143c', '#ea1540',
-                          '#2eb82e', '#29a329', '#248f24', '#1f7a1f', '#196619' ];
+          $scope.colours = [ '#ea1540', '#ff8c00', '#2eb82e' ];
+
           var markers = _.map($scope.datasets.languages, function(l) {
               if (parseFloat(l.coords[0])  && parseFloat(l.coords[2])) {
                   var c = 0;
                   _.each(l.resources, function(r) {
                       c += r;
                   });
-                  var color = $scope.colours[Math.ceil(mapRange(c))];
-                  if (color == undefined) color = '#196619';
+                  var color;
+                  if (c < 20) {
+                      color = $scope.colours[0];
+                  } else if (c < 150) {
+                      color = $scope.colours[1];
+                  } else {
+                      color = $scope.colours[2];
+                  }
                   return { 
                       layer: 'realworld',  
                       lat: parseFloat(l.coords[0]), 
                       lng: parseFloat(l.coords[2]),
-                      message: l.name,
+                      message: "<h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a>",
+                      getMessageScope: function() {return $scope; },
                       icon: {
                           type: 'makiMarker',
                           icon: 'marker',
@@ -128,5 +129,11 @@ angular.module('appApp')
           console.log('Countries', resp.data);
           $scope.datasets.countries = resp.data;
       });
+      $scope.moreInfo = function(code) {
+          console.log(code);
+      }
+      $scope.toggleSideNav = function() {
+          $mdSidenav('right').toggle();
+      }
 
   }]);
