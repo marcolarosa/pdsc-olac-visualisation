@@ -15,7 +15,7 @@ angular.module('appApp')
     '$mdDialog',
     function ($scope, $http, $mdSidenav, $mdDialog) {
         $mdDialog.show({
-            template: '<div layout="column" layout-align="center center">' + 
+            template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
                       '</div>',
             parent: angular.element(document.body),
