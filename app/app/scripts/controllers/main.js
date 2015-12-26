@@ -9,8 +9,17 @@
  */
 angular.module('appApp')
   .controller('MainCtrl', [ 
-    '$scope', '$http', '$window', '$mdSidenav', 'leaflet',
-    function ($scope, $http, $window, $mdSidenav, L) {
+    '$scope', 
+    '$http', 
+    '$mdSidenav', 
+    '$mdDialog',
+    function ($scope, $http, $mdSidenav, $mdDialog) {
+        $mdDialog.show({
+            template: '<div><md-progress-linear md-mode="determinate"></md-progress-linear></div>',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false
+        });
+
         $scope.config = {
             controlsOpen: false
         }
@@ -35,9 +44,7 @@ angular.module('appApp')
             $scope.datasets.countries = resp.data;
             console.log('Countries', $scope.datasets.countries);
         });
-        $scope.moreInfo = function(code) {
-            console.log(code);
-        }
+
         $scope.toggleSideNav = function() {
             $mdSidenav('right').toggle();
         }

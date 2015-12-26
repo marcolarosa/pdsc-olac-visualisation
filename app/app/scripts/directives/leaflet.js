@@ -11,7 +11,9 @@ angular.module('appApp')
     'leaflet',
     '_',
     'configuration',
-    function (leaflet, _, conf) {
+    '$compile',
+    '$mdDialog',
+    function (leaflet, _, conf, $compile, $mdDialog) {
     return {
       template: '<div id="map" style="height: 800px;"></div>',
       restrict: 'E',
@@ -19,7 +21,6 @@ angular.module('appApp')
           languages: '='
       },
       link: function postLink(scope, element, attrs) {
-
           var map = L.map('map', { minZoom: 2 }).setView([0,0],2);
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -40,24 +41,31 @@ angular.module('appApp')
                   } else {
                       color = conf.markerColours[2];
                   }
-                  return L.marker(new L.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[2])), {
-                      title: "<h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a>",
+
+                  var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
+                  var marker = L.marker(new L.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[2])), {
                       clickable: true,
                       icon: L.MakiMarkers.icon({
                           icon: 'marker',
                           color: color,
                           size: 'l'
-                      })
-                      /*
-                      getMessageScope: function() { return $scope; },
-                      */
+                      }),
                   });
+                  marker.bindPopup(element[0]);
+                  return marker;
               }
           }));
 
           var markers = L.markerClusterGroup();
           markers.addLayers(markerList);
           map.addLayer(markers);
+
+          // cancel the loading dialog
+          $mdDialog.cancel();
+
+          scope.moreInfo = function(marker) {
+              console.log(marker);
+          }
       }
     };
   }]);
