@@ -13,3 +13,7 @@ md-sidenav.md-closed.md-locked-open-add-active {
     max-width: 600px !important;
 } 
 
+.material-icons {
+    line-height: unset;
+}
+

@@ -18,7 +18,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngMaterial',
-    'leaflet-directive',
+    'underscore',
+    'leaflet',
   ])
   .config([
     '$routeProvider',
