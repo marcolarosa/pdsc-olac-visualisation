@@ -7,9 +7,9 @@
  * # browseByCountry
  */
 angular.module('appApp')
-  .directive('browseByCountry', function () {
+  .directive('browse', function () {
     return {
-      templateUrl: 'views/browse-by-country.html',
+      templateUrl: 'views/browse.html',
       restrict: 'E',
       scope: {
           countries: '=',
