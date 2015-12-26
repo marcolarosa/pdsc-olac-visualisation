@@ -5,6 +5,10 @@
     z-index: 10000;
 }
 
+md-dialog {
+    min-width: 0px;
+}
+
 md-sidenav, 
 md-sidenav.md-locked-open, 
 md-sidenav.md-closed.md-locked-open-add-active {

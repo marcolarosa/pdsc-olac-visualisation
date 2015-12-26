@@ -21,7 +21,7 @@ angular.module('appApp')
           languages: '='
       },
       link: function postLink(scope, element, attrs) {
-          var map = L.map('map', { minZoom: 2 }).setView([0,0],2);
+          var map = L.map('map', { minZoom: 1 }).setView([0,0],2);
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
               noWrap: true
