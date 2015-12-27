@@ -1,6 +1,12 @@
 <md-content>
-    <h3>Browse by country</h3>
+    <h3>Browse by {{browseBy}} <span ng-if="language">: &nbsp;{{language}}</span></h3>
+    <div ng-if="showBreadcrumb" layout="row" flex>
+        <md-button class="md-primary">browse countries</md-button>
+    </div>
+    <md-divider></md-divider>
     <md-list>
-        <md-list-item ng-click="navigateTo(country)" ng-repeat="country in countriesList">{{country}}</md-list-item>
+        <md-list-item ng-click="show(items.what, item)" ng-repeat="item in items.list">
+            {{item.name}}<span ng-if="item.count">&nbsp;({{item.count}} languages)</span>
+        </md-list-item>
     </md-list>
 </md-content>

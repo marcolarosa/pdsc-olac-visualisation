@@ -63,8 +63,8 @@ angular.module('appApp')
           // cancel the loading dialog
           $mdDialog.cancel();
 
-          scope.moreInfo = function(marker) {
-              console.log(marker);
+          scope.moreInfo = function(language) {
+              scope.selectedLanguage = language;
           }
       }
     };
