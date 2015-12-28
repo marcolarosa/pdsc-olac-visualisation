@@ -7,7 +7,10 @@
  * # browseByCountry
  */
 angular.module('appApp')
-  .directive('browse', function () {
+  .directive('browse', [ 
+    '$http', 
+    '$mdSidenav',
+        function ($http, $mdSidenav) {
     return {
       templateUrl: 'views/browse.html',
       restrict: 'E',
@@ -20,29 +23,56 @@ angular.module('appApp')
 
           scope.$watch('isVisible', function() {
               if (scope.isVisible) {
-                  scope.showBreadcrumb = false;
-                  scope.browseBy = 'country';
-                  scope.language = null;
-                  scope.items = {
-                    list: _.sortBy(scope.countries, function(country) { return country.name; }),
-                    what: 'country'
-                  }
+                  scope.browseCountries();
               }
           });
 
           scope.show = function(what, item) {
               if (what === 'country') {
-                  scope.browseBy = 'language';
                   scope.showBreadcrumb = true;
-                  scope.language = item.name;
+                  scope.country = item.name;
+                  scope.title = 'Browse languages in ' + scope.country;
                   scope.items = {
-                      list: _.sortBy(scope.countries[item.name].language_data, function(l) { return l.name; }),
+                      list: _.sortBy(scope.countries[scope.country].language_data, function(l) { return l.name; }),
                       what: 'language'
                   }
               } else if (what === 'language') {
-                  console.log(item);
+                  $http.get('/data/' + item.code + '.json').then(function(resp) {
+                      scope.title = 'Browse resources';
+                      var languageData = resp.data;
+                      scope.languageData = resp.data;
+                  });
               }
           }
+
+          scope.browseCountries = function() {
+              scope.showBreadcrumb = false;
+              scope.country = null;
+              delete scope.languageData;
+              scope.title = 'Browse countries';
+              scope.items = {
+                  list: _.sortBy(scope.countries, function(country) { return country.name; }),
+                  what: 'country'
+              }
+          }
+
+          scope.browseLanguages = function() {
+              scope.title = 'Browse languages in ' + scope.country;
+              delete scope.languageData;
+          }
+
+          scope.back = function() {
+              if (scope.languageData) {
+                  scope.browseLanguages()
+              } else if (scope.country) {
+                  scope.browseCountries();
+              }
+          }
+
+          scope.close = function() {
+              $mdSidenav('right').toggle();
+          }
+
       }
     };
-  });
+  }]);

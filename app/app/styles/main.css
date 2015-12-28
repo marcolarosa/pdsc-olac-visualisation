@@ -9,6 +9,7 @@ md-dialog {
     min-width: 0px;
 }
 
+
 md-sidenav, 
 md-sidenav.md-locked-open, 
 md-sidenav.md-closed.md-locked-open-add-active {
@@ -21,3 +22,15 @@ md-sidenav.md-closed.md-locked-open-add-active {
     line-height: unset;
 }
 
+.online_indicator {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #005500;
+    background-color: #DDFFDD;
+    border: solid 1px #AAEEAA;
+    margin: 10px;
+}
+
+md-icon.material-icons {
+    display: block !important;
+}
