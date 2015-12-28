@@ -13,14 +13,16 @@ angular.module('appApp')
     'configuration',
     '$compile',
     '$mdDialog',
-    function (leaflet, _, conf, $compile, $mdDialog) {
+    '$window',
+    function (leaflet, _, conf, $compile, $mdDialog, $window) {
     return {
-      template: '<div id="map" style="height: 800px;"></div>',
+      template: '<div id="map"></div>',
       restrict: 'E',
       scope: {
           languages: '='
       },
       link: function postLink(scope, element, attrs) {
+          angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.90) + 'px';
           var map = L.map('map', { minZoom: 1 }).setView([0,0],2);
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
