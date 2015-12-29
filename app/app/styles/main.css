@@ -34,3 +34,7 @@ md-sidenav.md-closed.md-locked-open-add-active {
 md-icon.material-icons {
     display: block !important;
 }
+
+.no-margin {
+    margin: 0;
+}

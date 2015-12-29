@@ -1,0 +1,23 @@
+<div layout="column">
+    <md-list-item ng-click="toggleItem()">
+        {{title}} ({{resources.length}})
+    </md-list-item>
+    <span ng-hide="config.hide">
+        <md-divider></md-divider>
+        <div layout="column">
+            <ol class="no-margin" start="{{config.numberFrom}}">
+                <span ng-repeat="resource in resourceSet">
+                    <p ng-bind-html="resource"></p>
+                </span>
+            </ol>
+        </div>
+
+        <div class="" layout="row" layout-align="" ng-if="enablePagination" flex>
+            <md-button class="md-primary" ng-click="jumpToStart()"><i class="material-icons">fast_rewind</i></md-button>
+            <md-button class="md-primary" ng-click="back()"><i class="material-icons">skip_previous</i></md-button>
+            <md-button class="md-primary" ng-click="forward()"><i class="material-icons">skip_next</i></md-button>
+            <md-button class="md-primary" ng-click="jumpToEnd()"><i class="material-icons">fast_forward</i></md-button>
+        </div>
+        <md-divider></md-divider>
+    </span>
+</div>

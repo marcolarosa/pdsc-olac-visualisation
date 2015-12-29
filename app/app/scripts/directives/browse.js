@@ -38,7 +38,7 @@ angular.module('appApp')
                   }
               } else if (what === 'language') {
                   $http.get('/data/' + item.code + '.json').then(function(resp) {
-                      scope.title = 'Browse resources';
+                      scope.title = '';
                       var languageData = resp.data;
                       scope.languageData = resp.data;
                   });

@@ -18,33 +18,23 @@
     <p>
         <a href="{{languageData.url}}" target="_blank">{{languageData.url}}</a>
     </p>
-    <md-divider></md-divider>
-    <span ng-if="languageData.resources['Primary texts']">
-        <h4 class="md-title">Primary Texts ({{languageData.resources['Primary texts'].count}})</h4>
-        <span ng-repeat="resource in languageData.resources['Primary texts'].resources">
-            <p ng-bind-html="resource"></p>
-        </span>
-    </span>
 
-    <span ng-if="languageData.resources['Lexical resources']">
-        <h4 class="md-title">Lexical Resources ({{languageData.resources['Lexical resources'].count}})</h4>
-        <span ng-repeat="resource in languageData.resources['Lexical resources'].resources">
-            <p ng-bind-html="resource"></p>
+    <md-list>
+        <span ng-if="languageData.resources['Primary texts']">
+            <resource-renderer title="Primary Texts" resources="languageData.resources['Primary texts'].resources"></resource-renderer>
         </span>
-    </span>
 
-    <span ng-if="languageData.resources['Language descriptions']">
-        <h4 class="md-title">Language Descriptions ({{languageData.resources['Language descriptions'].count}})</h4>
-        <span ng-repeat="resource in languageData.resources['Language descriptions'].resources">
-            <p ng-bind-html="resource"></p>
+        <span ng-if="languageData.resources['Lexical resources']">
+            <resource-renderer title="Lexical Resources" resources="languageData.resources['Lexical resources'].resources"></resource-renderer>
         </span>
-    </span>
 
-    <span ng-if="languageData.resources['Other resources about the language']">
-        <h4 class="md-title">Other Resources About the Language ({{languageData.resources['Other resources about the language'].count}})</h4>
-        <span ng-repeat="resource in languageData.resources['Other resources about the language'].resources">
-            <p ng-bind-html="resource"></p>
+        <span ng-if="languageData.resources['Language descriptions']">
+            <resource-renderer title="Language Descriptions" resources="languageData.resources['Language descriptions'].resources"></resource-renderer>
         </span>
-    </span>
+
+        <span ng-if="languageData.resources['Other resources about the language']">
+            <resource-renderer title="Other resources about the language" resources="languageData.resources['Other resources about the language'].resources"></resource-renderer>
+        </span>
+    </md-list>
     
 </md-content>
