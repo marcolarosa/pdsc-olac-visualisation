@@ -4,6 +4,7 @@
     </md-list-item>
     <span ng-hide="config.hide">
         <md-divider></md-divider>
+        <search-resources resources="resources" search-results="searchResults"></search-resources>
         <div layout="column">
             <ol class="no-margin" start="{{config.numberFrom}}">
                 <span ng-repeat="resource in resourceSet">
@@ -12,7 +13,7 @@
             </ol>
         </div>
 
-        <div class="" layout="row" layout-align="" ng-if="enablePagination" flex>
+        <div class="" layout="row" layout-align="center center" ng-if="enablePagination" flex>
             <md-button class="md-primary" ng-click="jumpToStart()"><i class="material-icons">fast_rewind</i></md-button>
             <md-button class="md-primary" ng-click="back()"><i class="material-icons">skip_previous</i></md-button>
             <md-button class="md-primary" ng-click="forward()"><i class="material-icons">skip_next</i></md-button>

@@ -19,17 +19,27 @@ angular.module('appApp')
           resources: '='
       },
       link: function postLink(scope, element, attrs) {
-          scope.$on('close-item', function() {
-              scope.config.hide = true;
-          });
 
           scope.config = {
               pageSize: 10,
               start: 0,
               numberFrom: 1,
               hide: true,
-              enablePagination: false
+              enablePagination: false,
+              me: false
           }
+
+          scope.$on('close-item', function() {
+              if (!scope.config.me) scope.config.hide = true;
+              scope.config.me = false;
+          });
+
+          scope.$watch('searchResults', function(){
+              if (scope.searchResults) {
+                  scope.resources = scope.searchResults;
+              }
+              scope.updateSet();
+          }, true);
 
           if (scope.resources.length > scope.config.pageSize) {
               scope.resourceSet = scope.resources.slice(0,scope.config.pageSize);
@@ -64,6 +74,7 @@ angular.module('appApp')
           }
 
           scope.toggleItem = function() {
+              scope.config.me = true;
               $rootScope.$broadcast('close-item');
               $timeout(function() {
                   scope.config.hide =  !scope.config.hide;
