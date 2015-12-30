@@ -14,7 +14,8 @@ angular.module('appApp')
     '$compile',
     '$mdDialog',
     '$window',
-    function (leaflet, _, conf, $compile, $mdDialog, $window) {
+    '$mdSidenav',
+    function (leaflet, _, conf, $compile, $mdDialog, $window, $mdSidenav) {
     return {
       template: '<div id="map"></div>',
       restrict: 'E',
@@ -66,7 +67,8 @@ angular.module('appApp')
           $mdDialog.cancel();
 
           scope.moreInfo = function(language) {
-              scope.selectedLanguage = language;
+              conf.selectedLanguage = language;
+              $mdSidenav('right').toggle();
           }
       }
     };

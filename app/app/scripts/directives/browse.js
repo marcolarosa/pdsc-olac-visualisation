@@ -10,7 +10,8 @@ angular.module('appApp')
   .directive('browse', [ 
     '$http', 
     '$mdSidenav',
-        function ($http, $mdSidenav) {
+    'configuration',
+        function ($http, $mdSidenav, conf) {
     return {
       templateUrl: 'views/browse.html',
       restrict: 'E',
@@ -23,7 +24,12 @@ angular.module('appApp')
 
           scope.$watch('isVisible', function() {
               if (scope.isVisible) {
-                  scope.browseCountries();
+                  if (conf.selectedLanguage) {
+                      scope.show('language', { code: conf.selectedLanguage });
+                      delete conf.selectedLanguage;
+                  } else {
+                      scope.browseCountries();
+                  }
               }
           });
 

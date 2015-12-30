@@ -14,7 +14,7 @@
 
 
 <md-content ng-if="languageData">
-    <h4 class="md-title">{{country}}: {{languageData.name}}</h4>
+    <h4 class="md-title"><span ng-if="country">{{country}}:</span> {{languageData.name}}</h4>
     <p>
         <a href="{{languageData.url}}" target="_blank">{{languageData.url}}</a>
     </p>
