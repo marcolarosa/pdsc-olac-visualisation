@@ -9,6 +9,7 @@
  */
 angular.module('appApp')
   .constant('configuration', {
+      'languageArchives': 'http://www.language-archives.org',
       'map': {
           'width': '100%',
           'height': window.innerHeight * 0.95,

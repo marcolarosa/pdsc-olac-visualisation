@@ -10,7 +10,8 @@ angular.module('appApp')
   .directive('resourceRenderer', [ 
     '$timeout', 
     '$rootScope',
-        function ($timeout, $rootScope) {
+    'configuration',
+        function ($timeout, $rootScope, conf) {
     return {
       templateUrl: 'views/resource-renderer.html',
       restrict: 'E',
@@ -19,6 +20,10 @@ angular.module('appApp')
           resources: '='
       },
       link: function postLink(scope, element, attrs) {
+          // fix the links on the way through
+          scope.resources = _.map(scope.resources, function(r, i) {
+              return r.replace('/item/', conf.languageArchives + '/item/');
+          });
 
           scope.config = {
               pageSize: 10,
