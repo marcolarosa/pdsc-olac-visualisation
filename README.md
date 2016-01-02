@@ -47,3 +47,21 @@ optional arguments:
   --info                Turn on informational messages
   --debug               Turn on full debugging (includes --info)
 ```
+
+## Installing the app on your server
+
+Assuming you have a linux server with the pre-requisites installed and ready (python 2.7, lxml and a web server), installation consists of downloading the scraper scripts into a suitable location and cloning the web app into a folder configured to be served via the webserver.
+
+To get the app clone `testing` branch viz (assuming you're in the folder you want the code):
+
+```
+git clone -b testing git@github.com:MLR-au/olac-visualisation.git .
+```
+
+To get the scraper scripts clone master viz (again, assuming you're in the folder you want to install the code):
+```
+git clone git@github.com:MLR-au/olac-visualisation.git
+```
+
+Then you can set up cron jobs to scrape the language archives site nightly / weekly as desired. See the section `Hacking on the python scraper` for an example invocation. Note that you must set `$OUTPUT` to the the folder `data` in the web app folder.
+
