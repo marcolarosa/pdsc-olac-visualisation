@@ -41,8 +41,7 @@ module.exports = function (grunt) {
         testing: {
             options: {
                 remote: 'git@github.com:MLR-au/olac-visualisation.git',
-                branch: 'testing',
-                tag: pkg.version
+                branch: 'testing'
            }
         },
         local: {
