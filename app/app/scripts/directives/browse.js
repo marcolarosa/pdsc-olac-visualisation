@@ -50,6 +50,7 @@ angular.module('appApp')
                       scope.languageData = resp.data;
                       scope.error = false;
                   }, function(error) {
+                      delete scope.items;
                       delete scope.languageData;
                       scope.error = true;
                   });
