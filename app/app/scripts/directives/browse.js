@@ -42,11 +42,16 @@ angular.module('appApp')
                       list: _.sortBy(scope.countries[scope.country].language_data, function(l) { return l.name; }),
                       what: 'language'
                   }
+                  scope.error = false;
               } else if (what === 'language') {
                   $http.get('/data/' + item.code + '.json').then(function(resp) {
                       scope.title = '';
                       var languageData = resp.data;
                       scope.languageData = resp.data;
+                      scope.error = false;
+                  }, function(error) {
+                      delete scope.languageData;
+                      scope.error = true;
                   });
               }
           }

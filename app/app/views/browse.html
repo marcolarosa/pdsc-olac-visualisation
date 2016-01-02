@@ -36,5 +36,9 @@
             <resource-renderer title="Other resources about the language" resources="languageData.resources['Other resources about the language'].resources"></resource-renderer>
         </span>
     </md-list>
-    
+</md-content>
+
+<md-content ng-if="error" layout="column" layout-align="center center">
+    <img src="images/error.svg">
+    Whatever your language and however you say it it doesn't change the fact that something went wrong trying to get the data for that language!
 </md-content>
