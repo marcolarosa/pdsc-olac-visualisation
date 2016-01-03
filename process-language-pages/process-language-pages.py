@@ -41,9 +41,17 @@ class ProcessLanguage:
             resource_list = e.findall('li')
 
             log.debug("Processing: %s, found: %s" % (resource, len(resource_list)))
-            r = []
+            r = {}
             for l in resource_list:
-                r.append(etree.tostring(l))
+                for e in l.getchildren():
+                    stringified = etree.tostring(e)
+                    if e.tag == 'span' and e.attrib['class'] == 'online_indicator':
+                        r['is_online'] = True
+                    elif e.tag == 'a':
+                        r['url'] = os.path.join(self.language_resources['url'].split('/language')[0], e.attrib['href'].lstrip('/'))
+                        r['name'] = e.text
+                    else:
+                        r['text'] = stringified
 
             resources[resource] = {
                 'count': len(resource_list),
@@ -63,7 +71,7 @@ if __name__ == "__main__":
     parser.add_argument('--languages', dest='languages', help='The path to the CSV file containing the language codes', required=True)
     parser.add_argument('--pages',     dest='pages',     help='The base pages URL: Probably: http://www.language-archives.org/language', required=True)
     parser.add_argument('--output',    dest='output',    help='The folder to store the JSON representation.', required=True)
-    parser.add_argument('--one',       dest='one',       help='Process only one language code.', action='store_true')
+    parser.add_argument('--one',       dest='one',       help='Process only one language code.')
     parser.add_argument('--refresh',   dest='refresh',   help='Ignore data and reprocess.',      action='store_true')
 
     parser.add_argument('--info', dest='info', action='store_true', help='Turn on informational messages')
