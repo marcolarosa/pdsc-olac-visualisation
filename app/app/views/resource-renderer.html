@@ -7,9 +7,13 @@
         <search-resources resources="resources" search-results="searchResults"></search-resources>
         <div layout="column">
             <ol class="no-margin" start="{{config.numberFrom}}">
-                <span ng-repeat="resource in resourceSet">
-                    <p ng-bind-html="resource"></p>
-                </span>
+                <li ng-repeat="resource in resourceSet" class="md-padding">
+                        <span>
+                            <span class="online_indicator" ng-if="resource.is_online">ONLINE</span>
+                            <span ng-bind-html="resource.text"></span>
+                        </span>
+                        <a href="" ng-click="moreInformation(resource.url)">{{resource.name}}</a>
+                </li>
             </ol>
         </div>
 

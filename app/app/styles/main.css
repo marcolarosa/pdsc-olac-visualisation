@@ -28,7 +28,7 @@ md-sidenav.md-closed.md-locked-open-add-active {
     color: #005500;
     background-color: #DDFFDD;
     border: solid 1px #AAEEAA;
-    margin: 10px;
+    margin: 5px 0px 5px 0px;
 }
 
 md-icon.material-icons {
@@ -37,4 +37,14 @@ md-icon.material-icons {
 
 .no-margin {
     margin: 0;
+}
+
+.item-information-dialog {
+    height: 90vw;
+    width: 90vw;
+    border: 0;
+}
+
+.md-dialog-container {
+    z-index: 11000;
 }

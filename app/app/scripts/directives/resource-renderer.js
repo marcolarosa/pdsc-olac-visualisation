@@ -11,7 +11,8 @@ angular.module('appApp')
     '$timeout', 
     '$rootScope',
     'configuration',
-        function ($timeout, $rootScope, conf) {
+    '$mdDialog',
+        function ($timeout, $rootScope, conf, $mdDialog) {
     return {
       templateUrl: 'views/resource-renderer.html',
       restrict: 'E',
@@ -21,10 +22,6 @@ angular.module('appApp')
       },
       link: function postLink(scope, element, attrs) {
           // fix the links on the way through
-          scope.resources = _.map(scope.resources, function(r, i) {
-              return r.replace('/item/', conf.languageArchives + '/item/');
-          });
-
           scope.config = {
               pageSize: 10,
               start: 0,
@@ -85,6 +82,25 @@ angular.module('appApp')
                   scope.config.hide =  !scope.config.hide;
               }, 10);
           }
+
+          scope.moreInformation = function(item) {
+              $mdDialog.show({
+                  controller: function() {
+                  },
+                  template: '' + 
+                      '<md-dialog>' + 
+                      '    <md-dialog-content><iframe src="' + item + '" class="item-information-dialog"/></md-dialog-content>' +
+                      '</md-dialog>',
+                  parent: angular.element(document.body),
+                  clickOutsideToClose: true,
+                  fullscreen: true
+              })
+          }
+
+          scope.close = function() {
+              console.log('close the dialog');
+          }
+
 
       }
     };

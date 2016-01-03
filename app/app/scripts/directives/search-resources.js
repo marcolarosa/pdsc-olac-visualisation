@@ -25,7 +25,7 @@ angular.module('appApp')
                   scope.searchResults = _.compact(_.map(scope.originalResources, function(r) {
                       var pattern = scope.what;
                       var re = RegExp(scope.what, 'im');
-                      var result = r.search(re);
+                      var result = r.text.search(re);
                       if (result != -1) return r;
                   }));
               }
