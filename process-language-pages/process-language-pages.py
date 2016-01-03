@@ -41,17 +41,19 @@ class ProcessLanguage:
             resource_list = e.findall('li')
 
             log.debug("Processing: %s, found: %s" % (resource, len(resource_list)))
-            r = {}
+            r = []
             for l in resource_list:
+                rdata = {}
                 for e in l.getchildren():
                     stringified = etree.tostring(e)
                     if e.tag == 'span' and e.attrib['class'] == 'online_indicator':
-                        r['is_online'] = True
+                        rdata['is_online'] = True
                     elif e.tag == 'a':
-                        r['url'] = os.path.join(self.language_resources['url'].split('/language')[0], e.attrib['href'].lstrip('/'))
-                        r['name'] = e.text
+                        rdata['url'] = os.path.join(self.language_resources['url'].split('/language')[0], e.attrib['href'].lstrip('/'))
+                        rdata['name'] = e.text
                     else:
-                        r['text'] = stringified
+                        rdata['text'] = stringified
+                r.append(rdata)
 
             resources[resource] = {
                 'count': len(resource_list),
