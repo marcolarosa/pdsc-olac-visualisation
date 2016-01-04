@@ -14,5 +14,18 @@ angular.module('appApp')
           'width': '100%',
           'height': window.innerHeight * 0.95,
       },
-      'markerColours': [ '#ea1540', '#ff8c00', '#2eb82e' ]
+      'markerColours': [ 
+        {
+            colour: '#ea1540', 
+            label: 'less than 20 resources'
+        },
+        {
+            colour: '#ff8c00', 
+            label:  'between 20 and 150 resources'
+        },
+        {
+            colour: '#2eb82e',
+            label: 'more than 150 resources'
+        }
+      ]
   });

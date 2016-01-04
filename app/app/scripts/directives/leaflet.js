@@ -38,11 +38,11 @@ angular.module('appApp')
                   });
                   var color;
                   if (c < 20) {
-                      color = conf.markerColours[0];
+                      color = conf.markerColours[0].colour;
                   } else if (c < 150) {
-                      color = conf.markerColours[1];
+                      color = conf.markerColours[1].colour;
                   } else {
-                      color = conf.markerColours[2];
+                      color = conf.markerColours[2].colour;
                   }
 
                   var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);

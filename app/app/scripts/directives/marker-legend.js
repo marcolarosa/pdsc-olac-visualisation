@@ -7,14 +7,14 @@
  * # markerLegend
  */
 angular.module('appApp')
-  .directive('markerLegend', function () {
+  .directive('markerLegend', [ 'configuration', function (conf) {
     return {
       templateUrl: 'views/marker-legend.html',
       restrict: 'E',
       scope: {
-          colours: '='
       },
       link: function postLink(scope, element, attrs) {
+          scope.colours = conf.markerColours;
       }
     };
-  });
+  }]);
