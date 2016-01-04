@@ -7,7 +7,7 @@
 <md-content ng-if="!languageData">
     <md-list>
         <md-list-item ng-click="show(items.what, item)" ng-repeat="item in items.list">
-            {{item.name}}<span ng-if="item.count">&nbsp;({{item.count}} languages)</span>
+            {{item.name}}<!-- <span ng-if="item.count">&nbsp;({{item.count}} languages)</span> -->
         </md-list-item>
     </md-list>
 </md-content>
