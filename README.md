@@ -1,12 +1,12 @@
 # OLAC Visualisation
 
 # About this project
-    This work is led by Nick Thieberger at the University of Melbourne as part of the
-    [Centre of Excellence for the Dynamics of Language](http://www.dynamicsoflanguage.edu.au/)
-    (ARC grant CE140100041).
-    [
-        ![alt text](http://www.dynamicsoflanguage.edu.au/design/main/images/logo-2x.png)
-    ](http://www.dynamicsoflanguage.edu.au/)
+This work is led by Nick Thieberger at the University of Melbourne as part of the
+[Centre of Excellence for the Dynamics of Language](http://www.dynamicsoflanguage.edu.au/)
+(ARC grant CE140100041).
+[
+    ![alt text](http://www.dynamicsoflanguage.edu.au/design/main/images/logo-2x.png)
+](http://www.dynamicsoflanguage.edu.au/)
 
 # Preamble
 
