@@ -1,5 +1,15 @@
 # OLAC Visualisation
 
+# About this project
+    This work is led by Nick Thieberger at the University of Melbourne as part of the
+    [Centre of Excellence for the Dynamics of Language](http://www.dynamicsoflanguage.edu.au/)
+    (ARC grant CE140100041).
+    [
+        ![alt text](http://www.dynamicsoflanguage.edu.au/design/main/images/logo-2x.png)
+    ](http://www.dynamicsoflanguage.edu.au/)
+
+# Preamble
+
 This code is in two parts:
 - app: is an angular app that presents a map based visualization of the data at http://www.language-archives.org/.
 - process-language-pages: a python script to scrape the data at http://www.language-archives.org/ and create json files for the angular app to consume.
