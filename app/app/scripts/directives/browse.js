@@ -26,16 +26,20 @@ angular.module('appApp')
               if (scope.isVisible) {
                   if (conf.selectedLanguage) {
                       scope.show('language', { code: conf.selectedLanguage });
-                      delete conf.selectedLanguage;
                   } else {
                       scope.browseCountries();
                   }
+              } else {
+                  // wipe the slate clean
+                  delete conf.selectedLanguage;
+                  delete scope.languageData;
+                  delete scope.country;
+                  delete scope.items;
               }
           });
 
           scope.show = function(what, item) {
               if (what === 'country') {
-                  scope.showBreadcrumb = true;
                   scope.country = item.name;
                   scope.title = 'Browse languages in ' + scope.country;
                   scope.items = {
@@ -58,7 +62,6 @@ angular.module('appApp')
           }
 
           scope.browseCountries = function() {
-              scope.showBreadcrumb = false;
               scope.country = null;
               delete scope.languageData;
               scope.title = 'Browse countries';
