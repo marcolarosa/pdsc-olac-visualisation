@@ -1,7 +1,6 @@
 #!/bin/bash
 
 OUTPUT="../app/app/data"
-rm -rf $OUTPUT/*
 
 ./process-language-pages.py --languages languages.csv --pages http://www.language-archives.org/language --output $OUTPUT --info
 ./create-summary.py --languages $OUTPUT --info
