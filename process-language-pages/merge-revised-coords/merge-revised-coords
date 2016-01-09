@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+import csv
+
+original = 'languages.csv'
+revised  = 'revised-coords.txt'
+output  = 'languages-updated.csv'
+
+coords = {}
+with open(revised, 'r') as f:
+    for line in f.readlines():
+        code, lat, lng = line.strip().split()
+        coords[code] = {
+            'lat': lat,
+            'lng': lng,
+        }
+
+
+updated_coords = []
+with open(original, 'rb') as csvfile:
+    d = csv.reader(csvfile)
+    for row in d:
+        try:
+            (n, olac_code, name, retired, cs) = (row[0], row[1], row[2], row[3], [row[4], row[5], row[6], row[7]])
+            if (cs== [ '', '', '', '']):
+                if coords[olac_code]:
+                    updated_coords.append([ row[0], row[1], row[2], row[3], coords[olac_code]['lat'], coords[olac_code]['lat'], coords[olac_code]['lng'], coords[olac_code]['lng'] ]) 
+            else:
+                updated_coords.append(row)
+
+        except IndexError:
+            continue
+
+        except KeyError:
+            continue
+
+with open(output, 'w') as f:
+    for r in updated_coords:
+        f.write(','.join(r) + '\n')
