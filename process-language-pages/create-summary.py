@@ -25,7 +25,7 @@ class CreateSummary:
                     s = {
                         'name': data['name'],
                         'coords': data['coords'],
-                        'code': fname.rstrip('.json'),
+                        'code': data['code'],
                         'file': fname,
                         'url': data['url']
                     }
