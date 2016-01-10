@@ -7,8 +7,8 @@ md-sidenav,
 md-sidenav.md-locked-open, 
 md-sidenav.md-closed.md-locked-open-add-active {
     min-width: 304px !important;
-    width: 85vw !important;
-    max-width: 600px !important;
+    width: 45vw !important;
+    max-width: 45vw !important;
 } 
 
 .material-icons {

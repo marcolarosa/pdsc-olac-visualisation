@@ -23,13 +23,24 @@ angular.module('appApp')
           languages: '='
       },
       link: function postLink(scope, element, attrs) {
+          scope.$on('zoom-to', function() {
+              if (conf.latlng.lat && conf.latlng.lng) {
+                  scope.map.panTo( L.latLng(parseFloat(conf.latlng.lat), parseFloat(conf.latlng.lng)) );
+                  scope.map.setZoom(8);
+                  scope.markersByCode[conf.latlng.code].openPopup();
+              }
+              delete conf.latlng;
+          });
+
           angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.90) + 'px';
-          var map = L.map('map', { minZoom: 1 }).setView([0,0],2);
+          scope.map = L.map('map', { minZoom: 1 }).setView([0,0],2);
+
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
               noWrap: true
-          }).addTo(map);
+          }).addTo(scope.map);
 
+          scope.markersByCode = {};
           var markerList = _.compact(_.map(scope.languages, function(l) {
               if (parseFloat(l.coords[0])  && parseFloat(l.coords[2])) {
                   var c = 0;
@@ -54,6 +65,7 @@ angular.module('appApp')
                           size: 'l'
                       }),
                   });
+                  scope.markersByCode[l.code] = marker;
                   marker.bindPopup(element[0]);
                   return marker;
               }
@@ -61,7 +73,7 @@ angular.module('appApp')
 
           var markers = L.markerClusterGroup();
           markers.addLayers(markerList);
-          map.addLayer(markers);
+          scope.map.addLayer(markers);
 
           // cancel the loading dialog
           $mdDialog.cancel();

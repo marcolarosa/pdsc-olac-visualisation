@@ -11,7 +11,8 @@ angular.module('appApp')
     '$http', 
     '$mdSidenav',
     'configuration',
-        function ($http, $mdSidenav, conf) {
+    '$rootScope',
+        function ($http, $mdSidenav, conf, $rootScope) {
     return {
       templateUrl: 'views/browse.html',
       restrict: 'E',
@@ -52,6 +53,12 @@ angular.module('appApp')
                       scope.title = '';
                       var languageData = resp.data;
                       scope.languageData = resp.data;
+                      conf.latlng = {
+                          code: scope.languageData.code,
+                          lat: scope.languageData.coords[0],
+                          lng: scope.languageData.coords[2]
+                      }
+                      $rootScope.$broadcast('zoom-to');
                       scope.error = false;
                   }, function(error) {
                       delete scope.items;
