@@ -23,6 +23,33 @@ angular.module('appApp')
       },
       link: function postLink(scope, element, attrs) {
 
+          // create an object keyed on language code which tells us how many 
+          //   resources are availabel for the language so we can display it 
+          //   when browsing the language list for a country.
+          scope.$watch('languages', function() {
+              if (scope.languages) {
+                  scope.languageCounts = {}; 
+                  _.each(scope.languages, function(l) {
+                      scope.languageCounts[l.code] = 0;
+                      _.each(l.resources, function(r) {
+                          scope.languageCounts[l.code] += r;
+                      });
+                  });
+                  _.each(scope.countries, function(country) {
+                      _.each(country.language_data, function(language) {
+                          language.count = scope.languageCounts[language.code];
+                          if (language.count < 20) {
+                              language.colour = conf.markerColours[0].colour;
+                          } else if (language.count > 20 && language.count < 150) {
+                              language.colour = conf.markerColours[1].colour;
+                          } else {
+                              language.colour = conf.markerColours[2].colour;
+                          }
+                      });
+                  });
+              }
+          });
+
           scope.$watch('isVisible', function() {
               if (scope.isVisible) {
                   if (conf.selectedLanguage) {
