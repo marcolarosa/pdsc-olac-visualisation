@@ -41,7 +41,7 @@ module.exports = function (grunt) {
         },
         testing: {
             options: {
-                remote: 'git@github.com:MLR-au/olac-visualisation.git',
+                remote: 'git@github.com:MLR-au/pdsc-olac-visualisation.git',
                 branch: 'testing'
            }
         },
