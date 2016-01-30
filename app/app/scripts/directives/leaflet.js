@@ -71,7 +71,7 @@ angular.module('appApp')
               }
           }));
 
-          var markers = L.markerClusterGroup();
+          var markers = L.markerClusterGroup({ disableClusteringAtZoom: 8 });
           markers.addLayers(markerList);
           scope.map.addLayer(markers);
 
