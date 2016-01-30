@@ -67,6 +67,7 @@ angular.module('appApp')
                   });
                   scope.markersByCode[l.code] = marker;
                   marker.bindPopup(element[0]);
+                  marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
                   return marker;
               }
           }));
