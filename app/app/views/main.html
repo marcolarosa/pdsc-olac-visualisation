@@ -5,6 +5,17 @@
                 <leaflet languages="datasets.languages" ng-if="datasets.languages"></leaflet>
             </md-card-content>
         </md-card>
+
+        <div layout="row" layout-padding>
+            <marker-legend class="marker-legend" ng-if='datasets.languages'></marker-legend>
+            <div class="help-text" flex='90'>
+                This map shows the number of items available in archives participating in the 
+                <a href="http://www.language-archives.org/">Open Language Archives Community</a> for any given 
+                language. The main aim of these archives is to make available information about the smaller languages of the 
+                world. Clearly, major languages have enormous amounts of information available, but for many of the world's 
+                languages, as will be seen on this site, little or nothing has been recorded or is available via one of the participating archives.
+            </div>
+        </div>
     </md-content>
     <md-fab-speed-dial class="md-fab-bottom-right" style="z-index: 10000;">
         <md-fab-trigger>
@@ -25,4 +36,3 @@
     </md-content>
 </md-sidenav>
 
-<marker-legend class="marker-legend" ng-if='datasets.languages'></marker-legend>

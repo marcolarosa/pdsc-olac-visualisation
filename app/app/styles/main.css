@@ -45,7 +45,7 @@ md-icon.material-icons {
 .marker-legend {
     position: absolute;
     z-index: 100;
-    top: 90%;
+    top: 75vh;
     left: 1%;
 }
 
@@ -60,6 +60,11 @@ md-icon.material-icons {
     width: 40px; 
     border-radius: 4px; 
     margin: 1px 5px 1px 0px;
+}
+
+.help-text {
+    width: 70vw;
+    padding: 10px;
 }
 
 .marker-cluster-small {
