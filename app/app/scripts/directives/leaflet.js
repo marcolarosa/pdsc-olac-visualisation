@@ -32,7 +32,7 @@ angular.module('appApp')
               delete conf.latlng;
           });
 
-          angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.80) + 'px';
+          angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.70) + 'px';
           scope.map = L.map('map', { minZoom: 1 }).setView([0,0],2);
 
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
