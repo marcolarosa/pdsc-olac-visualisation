@@ -33,6 +33,7 @@ class ProcessLanguage:
             return
 
         name = self.page.find('//body/table[@class="doc_header"]/tr/td[2]').text_content()
+        name = name.split('language')[0].strip()
         self.language_resources['name'] = name.replace('OLAC resources in and about the ', '')
 
         resources = {}
@@ -103,7 +104,13 @@ if __name__ == "__main__":
         d = csv.reader(csvfile)
         for row in d:
             try:
-                (n, olac_code, name, coords) = (row[0], row[1], row[3], [row[4], row[5], row[6], row[7]])
+                if len(row) == 10:
+                    (n, olac_code, name, coords) = (row[1], row[0], row[2], [row[8], row[9]])
+                    #(n, olac_code, name, coords) = (row[1], row[0], row[2], [row[4], row[5], row[6], row[7]])
+                elif len(row) == 8:
+                    (n, olac_code, name, coords) = (row[1], row[0], row[2], [row[4], row[6]])
+                else:
+                    print '**', row
             except IndexError:
                 continue
 
