@@ -33,7 +33,15 @@ angular.module('appApp')
         }
 
         $http.get('data/index.json').then(function(resp) {
-            $scope.datasets.languages = resp.data;
+            $scope.datasets.languages = _.compact(_.map(resp.data, function(language) {
+                try {
+                    var lat = parseFloat(language.coords[0]);
+                    var lng = parseFloat(language.coords[1]);
+                    return language;
+                } catch (e) {
+                    // do nothing
+                }
+            }));
             console.log('Languages', $scope.datasets.languages);
         });
         /*
