@@ -45,7 +45,7 @@ md-icon.material-icons {
 .marker-legend {
     position: absolute;
     z-index: 100;
-    top: 75vh;
+    top: 65vh;
     left: 1%;
 }
 
