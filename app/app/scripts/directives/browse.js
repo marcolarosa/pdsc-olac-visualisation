@@ -83,7 +83,7 @@ angular.module('appApp')
                       conf.latlng = {
                           code: scope.languageData.code,
                           lat: scope.languageData.coords[0],
-                          lng: scope.languageData.coords[2]
+                          lng: scope.languageData.coords[1]
                       }
                       $rootScope.$broadcast('zoom-to');
                       scope.error = false;

@@ -42,7 +42,7 @@ angular.module('appApp')
 
           scope.markersByCode = {};
           var markerList = _.compact(_.map(scope.languages, function(l) {
-              if (parseFloat(l.coords[0])  && parseFloat(l.coords[2])) {
+              if (parseFloat(l.coords[0]) && parseFloat(l.coords[1])) {
                   var c = 0;
                   _.each(l.resources, function(r) {
                       c += r;
@@ -57,7 +57,7 @@ angular.module('appApp')
                   }
 
                   var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
-                  var marker = L.marker(new L.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[2])), {
+                  var marker = L.marker(new L.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
                       clickable: true,
                       icon: L.MakiMarkers.icon({
                           icon: 'marker',
