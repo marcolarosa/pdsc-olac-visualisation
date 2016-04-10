@@ -114,6 +114,13 @@ if __name__ == "__main__":
             except IndexError:
                 continue
 
+
+            try:
+                if os.path.exists(os.path.join(args.output, "%s.json" % olac_code)):
+                    pass
+            except:
+                continue
+
             if args.one:
                 if args.one == olac_code:
                     if not os.path.exists(os.path.join(args.output, "%s.json" % olac_code)) or args.refresh:
