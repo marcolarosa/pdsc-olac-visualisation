@@ -5,6 +5,7 @@ angular.module('appApp')
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
       ds.datasets = {};
+      ds.slice = 100;
 
       ds.get = function(what) {
           var url;
@@ -21,15 +22,19 @@ angular.module('appApp')
           }
 
           return $http.get(url).then(function(resp) {
-              ds.datasets.what = _.compact(_.map(resp.data, function(what) {
+              var data = _.compact(_.map(resp.data, function(d) {
                   try {
-                      return what;
+                      return d;
                   } catch (e) {
                       // do nothing
                   }
               }));
-              console.log(what, ds.datasets.what);
-              return ds.datasets.what;
+              if (ds.slice !== undefined) {
+                  ds.datasets[what] = data.slice(0,ds.slice);
+              } else {
+                  ds.datasets[what] = data;
+              }
+              return ds.datasets[what];
           });
       };
 
