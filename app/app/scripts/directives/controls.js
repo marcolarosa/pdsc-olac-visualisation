@@ -17,22 +17,7 @@ angular.module('appApp')
       },
       link: function postLink(scope) {
           scope.resourceFilters = [];
-
-          scope.$watch('languages', function() {
-              if (scope.languages !== undefined) {
-                  scope.extractResourceTypes();
-              }
-          });
-
-          scope.extractResourceTypes = function() {
-              var resourceTypes = [];
-              var resources = _.map(scope.languages, function(language) {
-                  return _.keys(language.resources);
-              });
-              resourceTypes.push(resources);
-              scope.resourceTypes = _.uniq(_.flatten(resources)).sort();
-          };
-
+          scope.resourceTypes = ds.datasets.resourceTypes;
 
           scope.filter = function(resource) {
               if (_.contains(scope.resourceFilters, resource)) {
