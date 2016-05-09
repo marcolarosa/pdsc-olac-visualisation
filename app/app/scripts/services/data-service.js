@@ -5,7 +5,7 @@ angular.module('appApp')
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
       ds.datasets = {};
-      ds.slice = 100;
+      ds.slice = 10;
 
       ds.get = function(what) {
           var url;
@@ -36,6 +36,23 @@ angular.module('appApp')
               }
               return ds.datasets[what];
           });
+      };
+
+      ds.mapLanguagesToCountries = function() {
+          ds.datasets.languageToCountryMapping = {};
+          _.each(ds.datasets.countries, function(country, key) {
+              _.each(country.language_data, function(language) {
+                  try {
+                      ds.datasets.languageToCountryMapping[language.code].push(country.name);
+                  } catch (e) {
+                      ds.datasets.languageToCountryMapping[language.code] = [country.name]
+                  }
+              });
+          });
+      };
+
+      ds.countryByKey = function() {
+          ds.datasets.countryByKey = _.groupBy(ds.datasets.countries, 'name');
       };
 
       return ds;
