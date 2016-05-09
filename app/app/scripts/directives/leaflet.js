@@ -22,10 +22,10 @@ angular.module('appApp')
       scope: {
           languages: '='
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
           scope.$on('zoom-to', function() {
               if (conf.latlng.lat && conf.latlng.lng) {
-                  scope.map.panTo( L.latLng(parseFloat(conf.latlng.lat), parseFloat(conf.latlng.lng)) );
+                  scope.map.panTo(leaflet.latLng(parseFloat(conf.latlng.lat), parseFloat(conf.latlng.lng)) );
                   scope.map.setZoom(8);
                   scope.markersByCode[conf.latlng.code].openPopup();
               }
@@ -33,9 +33,9 @@ angular.module('appApp')
           });
 
           angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.70) + 'px';
-          scope.map = L.map('map', { minZoom: 1 }).setView([0,0],2);
+          scope.map = leaflet.map('map', { minZoom: 1 }).setView([0,0],2);
 
-          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
               noWrap: true
           }).addTo(scope.map);
@@ -57,9 +57,9 @@ angular.module('appApp')
                   }
 
                   var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
-                  var marker = L.marker(new L.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
+                  var marker = leaflet.marker(new leaflet.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
                       clickable: true,
-                      icon: L.MakiMarkers.icon({
+                      icon: leaflet.MakiMarkers.icon({
                           icon: 'marker',
                           color: color,
                           size: 'l'
@@ -72,7 +72,7 @@ angular.module('appApp')
               }
           }));
 
-          var markers = L.markerClusterGroup({ disableClusteringAtZoom: 8 });
+          var markers = leaflet.markerClusterGroup({ disableClusteringAtZoom: 8 });
           markers.addLayers(markerList);
           scope.map.addLayer(markers);
 
@@ -82,7 +82,7 @@ angular.module('appApp')
           scope.moreInfo = function(language) {
               conf.selectedLanguage = language;
               $mdSidenav('right').toggle();
-          }
+          };
       }
     };
   }]);

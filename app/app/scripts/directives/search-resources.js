@@ -7,7 +7,7 @@
  * # searchResources
  */
 angular.module('appApp')
-  .directive('searchResources', function () {
+  .directive('searchResources', [ '_', function (_) {
     return {
       templateUrl: 'views/search-resources.html',
       restrict: 'E',
@@ -15,7 +15,7 @@ angular.module('appApp')
           resources: '=',
           searchResults: '='
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
           scope.originalResources = scope.resources;
 
           scope.search = function() {
@@ -23,18 +23,19 @@ angular.module('appApp')
                   scope.searchResults = scope.originalResources;
               } else if (scope.what.length > 2) {
                   scope.searchResults = _.compact(_.map(scope.originalResources, function(r) {
-                      var pattern = scope.what;
-                      var re = RegExp(scope.what, 'im');
+                      var re = new RegExp(scope.what, 'im');
                       var result = r.text.search(re);
-                      if (result != -1) return r;
+                      if (result !== -1) {
+                          return r;
+                      }
                   }));
               }
-          }
+          };
 
           scope.reset = function() {
               delete scope.what;
               scope.searchResults = scope.originalResources;
-          }
+          };
       }
     };
-  });
+  }]);

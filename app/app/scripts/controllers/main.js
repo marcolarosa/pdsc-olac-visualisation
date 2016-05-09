@@ -13,7 +13,8 @@ angular.module('appApp')
     '$http', 
     '$mdSidenav', 
     '$mdDialog',
-    function ($scope, $http, $mdSidenav, $mdDialog) {
+    '_',
+    function ($scope, $http, $mdSidenav, $mdDialog, _) {
         $mdDialog.show({
             template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
@@ -24,19 +25,17 @@ angular.module('appApp')
 
         $scope.config = {
             controlsOpen: false
-        }
+        };
 
         $scope.datasets = {
             'languages': undefined,
             'countries': undefined,
             'regions': undefined
-        }
+        };
 
         $http.get('data/index.json').then(function(resp) {
             $scope.datasets.languages = _.compact(_.map(resp.data, function(language) {
                 try {
-                    var lat = parseFloat(language.coords[0]);
-                    var lng = parseFloat(language.coords[1]);
                     return language;
                 } catch (e) {
                     // do nothing
@@ -57,6 +56,6 @@ angular.module('appApp')
 
         $scope.toggleSideNav = function() {
             $mdSidenav('right').toggle();
-        }
+        };
 
   }]);
