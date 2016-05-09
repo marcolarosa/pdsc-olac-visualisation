@@ -55,5 +55,12 @@ angular.module('appApp')
           ds.datasets.countryByKey = _.groupBy(ds.datasets.countries, 'name');
       };
 
+      ds.extractResourceTypes = function() {
+          var resources = _.map(ds.datasets.languages, function(language) {
+              return _.keys(language.resources);
+          });
+          ds.datasets.resourceTypes = _.uniq(_.flatten(resources)).sort();
+      }
+
       return ds;
   }]);
