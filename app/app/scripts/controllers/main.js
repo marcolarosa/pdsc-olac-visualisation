@@ -15,7 +15,9 @@ angular.module('appApp')
     '$mdDialog',
     '_',
     'dataService',
-    function ($scope, $http, $mdSidenav, $mdDialog, _, ds) {
+    '$timeout',
+    function ($scope, $http, $mdSidenav, $mdDialog, _, ds, $timeout) {
+        $scope.dataLoaded = false;
         $mdDialog.show({
             template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
@@ -32,14 +34,19 @@ angular.module('appApp')
 
         ds.get('languages').then(function(languages) {
             $scope.datasets.languages = languages;
-        });
-        //ds.get('regions').then(function(regions) {
-        //    $scope.datasets.regions = regions;
-        //});
-        ds.get('countries').then(function(countries) {
+            return ds.get('countries');
+        }).then(function(countries) {
             $scope.datasets.countries = countries;
             ds.mapLanguagesToCountries();
             ds.countryByKey();
+            ds.extractResourceTypes();
+
+            $scope.dataLoaded = true;
+            console.log(ds.datasets);
+
+            $timeout(function() {
+                $mdDialog.cancel();
+            }, 200);
         });
 
         $scope.toggleSideNav = function() {
