@@ -84,9 +84,6 @@ angular.module('appApp')
               scope.layer = scope.map.addLayer(scope.markers);
           }
 
-          // cancel the loading dialog
-          $mdDialog.cancel();
-
           scope.moreInfo = function(language) {
               conf.selectedLanguage = language;
               $mdSidenav('right').toggle();
