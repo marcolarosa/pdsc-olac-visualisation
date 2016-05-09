@@ -5,6 +5,7 @@ angular.module('appApp')
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
       ds.datasets = {};
+      ds.resourceFilters = [];
       //ds.slice = 10;
 
       ds.get = function(what) {
@@ -62,5 +63,37 @@ angular.module('appApp')
           ds.datasets.resourceTypes = _.uniq(_.flatten(resources)).sort();
       }
 
+      ds.filter = function(resource) {
+          if (_.contains(ds.resourceFilters, resource)) {
+              ds.resourceFilters = _.without(ds.resourceFilters, resource);
+          } else {
+              ds.resourceFilters.push(resource);
+          }
+
+          var languages, countries;
+          if (_.isEmpty(ds.resourceFilters)) {
+              languages = ds.datasets.languages;
+              countries = ds.datasets.countries;
+          } else {
+              languages = _.compact(_.map(ds.datasets.languages, function(l) {
+                  if (!_.isEmpty(_.intersection(_.keys(l.resources), ds.resourceFilters))) {
+                      return l;
+                  }
+              }));
+
+              countries = [];
+              _.each(languages, function(l) {
+                  var c = ds.datasets.languageToCountryMapping[l.code];
+                  if (c) {
+                      countries.push(ds.datasets.countryByKey[c[0]]);
+                  }
+              });
+          }
+
+          return {
+              'languages': languages,
+              'countries': countries
+          }
+      };
       return ds;
   }]);
