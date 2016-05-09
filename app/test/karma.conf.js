@@ -32,6 +32,7 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/leaflet/dist/leaflet-src.js',
       'bower_components/lodash/lodash.js',
+      'bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
       'bower_components/Leaflet.MakiMarkers/Leaflet.MakiMarkers.js',
       'bower_components/angular-material/angular-material.js',
       'bower_components/angular-mocks/angular-mocks.js',

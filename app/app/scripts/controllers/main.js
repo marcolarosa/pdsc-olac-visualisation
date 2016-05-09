@@ -18,6 +18,7 @@ angular.module('appApp')
     '$timeout',
     function ($scope, $http, $mdSidenav, $mdDialog, _, ds, $timeout) {
         $scope.dataLoaded = false;
+        /*
         $mdDialog.show({
             template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
@@ -25,6 +26,7 @@ angular.module('appApp')
             parent: angular.element(document.body),
             clickOutsideToClose: false
         });
+        */
 
         $scope.datasets = {
             'languages': undefined,
@@ -45,7 +47,7 @@ angular.module('appApp')
             console.log(ds.datasets);
 
             $timeout(function() {
-                $mdDialog.cancel();
+                //$mdDialog.cancel();
             }, 200);
         });
 

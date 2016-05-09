@@ -15,14 +15,17 @@ angular.module('appApp')
     '$mdDialog',
     '$window',
     '$mdSidenav',
-    function (leaflet, _, conf, $compile, $mdDialog, $window, $mdSidenav) {
+    '$timeout',
+    function (leaflet, _, conf, $compile, $mdDialog, $window, $mdSidenav, $timeout) {
     return {
-      template: '<div id="map"></div>',
+      templateUrl: 'views/leaflet.html',
       restrict: 'E',
       scope: {
           languages: '='
       },
       link: function postLink(scope) {
+          scope.showLoadingIndicator = true;
+
           scope.$on('zoom-to', function() {
               if (conf.latlng.lat && conf.latlng.lng) {
                   scope.map.panTo(leaflet.latLng(parseFloat(conf.latlng.lat), parseFloat(conf.latlng.lng)) );
@@ -32,10 +35,12 @@ angular.module('appApp')
               delete conf.latlng;
           });
           scope.$watch('languages', function() {
-              if (scope.markers) {
-                  scope.map.removeLayer(scope.markers);
+              if (scope.markers && scope.markerList) {
+                  scope.markers.removeLayers(scope.markerList);
               }
-              scope.drawMarkers();
+              $timeout(function() {
+                  scope.drawMarkers();
+              }, 1000);
           });
 
           angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.70) + 'px';
@@ -46,9 +51,28 @@ angular.module('appApp')
               noWrap: true
           }).addTo(scope.map);
 
+          scope.updateProgressBar = function(processed, total, elapsed) {
+              scope.$apply(function() {
+                  scope.progress = Math.round(processed/total*100);
+
+                  if (processed === total) {
+                      $timeout(function() {
+                          scope.showLoadingIndicator = false;
+                      }, 500);
+                  }
+              });
+          };
+
+          scope.markers = leaflet.markerClusterGroup({ 
+              chunkedLoading: true, 
+              chunkInterval: 25,
+              chunkDelay: 75,
+              chunkProgress: scope.updateProgressBar 
+          });
+
           scope.drawMarkers = function() {
               scope.markersByCode = {};
-              var markerList = _.compact(_.map(scope.languages, function(l) {
+              scope.markerList = _.compact(_.map(scope.languages, function(l) {
                   if (parseFloat(l.coords[0]) && parseFloat(l.coords[1])) {
                       var c = 0;
                       _.each(l.resources, function(r) {
@@ -63,7 +87,7 @@ angular.module('appApp')
                           color = conf.markerColours[2].colour;
                       }
 
-                      var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
+                      //var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
                       var marker = leaflet.marker(new leaflet.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
                           clickable: true,
                           icon: leaflet.MakiMarkers.icon({
@@ -73,15 +97,14 @@ angular.module('appApp')
                           }),
                       });
                       scope.markersByCode[l.code] = marker;
-                      marker.bindPopup(element[0]);
-                      marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
+                      //marker.bindPopup(element[0]);
+                      //marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
                       return marker;
                   }
               }));
 
-              scope.markers = leaflet.markerClusterGroup({ disableClusteringAtZoom: 8 });
-              scope.markers.addLayers(markerList);
-              scope.layer = scope.map.addLayer(scope.markers);
+              scope.markers.addLayers(scope.markerList);
+              scope.map.addLayer(scope.markers);
           }
 
           scope.moreInfo = function(language) {
