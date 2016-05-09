@@ -14,7 +14,8 @@ angular.module('appApp')
     '$mdSidenav', 
     '$mdDialog',
     '_',
-    function ($scope, $http, $mdSidenav, $mdDialog, _) {
+    'dataService',
+    function ($scope, $http, $mdSidenav, $mdDialog, _, ds) {
         $mdDialog.show({
             template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
@@ -33,25 +34,14 @@ angular.module('appApp')
             'regions': undefined
         };
 
-        $http.get('data/index.json').then(function(resp) {
-            $scope.datasets.languages = _.compact(_.map(resp.data, function(language) {
-                try {
-                    return language;
-                } catch (e) {
-                    // do nothing
-                }
-            }));
-            console.log('Languages', $scope.datasets.languages);
+        ds.get('languages').then(function(languages) {
+            $scope.datasets.languages = languages;
         });
-        /*
-        $http.get('data/regions.json').then(function(resp) {
-            console.log('Regions', resp.data);
-            $scope.datasets.regions = resp.data;
-        });
-        */
-        $http.get('data/countries.json').then(function(resp) {
-            $scope.datasets.countries = resp.data;
-            console.log('Countries', $scope.datasets.countries);
+        //ds.get('regions').then(function(regions) {
+        //    $scope.datasets.regions = regions;
+        //});
+        ds.get('countries').then(function(countries) {
+            $scope.datasets.countries = countries;
         });
 
         $scope.toggleSideNav = function() {
