@@ -24,10 +24,6 @@ angular.module('appApp')
             clickOutsideToClose: false
         });
 
-        $scope.config = {
-            controlsOpen: false
-        };
-
         $scope.datasets = {
             'languages': undefined,
             'countries': undefined,
@@ -42,6 +38,8 @@ angular.module('appApp')
         //});
         ds.get('countries').then(function(countries) {
             $scope.datasets.countries = countries;
+            ds.mapLanguagesToCountries();
+            ds.countryByKey();
         });
 
         $scope.toggleSideNav = function() {

@@ -50,6 +50,14 @@ angular.module('appApp')
                           return l;
                       }
                   }));
+
+                  scope.countries = [];
+                  _.each(scope.languages, function(l) {
+                      var c = ds.datasets.languageToCountryMapping[l.code];
+                      if (c) {
+                          scope.countries.push(ds.datasets.countryByKey[c[0]]);
+                      }
+                  });
               }
           };
 
