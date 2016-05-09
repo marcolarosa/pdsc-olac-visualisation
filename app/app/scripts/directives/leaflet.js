@@ -31,6 +31,12 @@ angular.module('appApp')
               }
               delete conf.latlng;
           });
+          scope.$watch('languages', function() {
+              if (scope.markers) {
+                  scope.map.removeLayer(scope.markers);
+              }
+              scope.drawMarkers();
+          });
 
           angular.element(document.getElementById('map'))[0].style.height = ($window.innerHeight * 0.70) + 'px';
           scope.map = leaflet.map('map', { minZoom: 1 }).setView([0,0],2);
@@ -40,41 +46,43 @@ angular.module('appApp')
               noWrap: true
           }).addTo(scope.map);
 
-          scope.markersByCode = {};
-          var markerList = _.compact(_.map(scope.languages, function(l) {
-              if (parseFloat(l.coords[0]) && parseFloat(l.coords[1])) {
-                  var c = 0;
-                  _.each(l.resources, function(r) {
-                      c += r;
-                  });
-                  var color;
-                  if (c < 20) {
-                      color = conf.markerColours[0].colour;
-                  } else if (c < 150) {
-                      color = conf.markerColours[1].colour;
-                  } else {
-                      color = conf.markerColours[2].colour;
+          scope.drawMarkers = function() {
+              scope.markersByCode = {};
+              var markerList = _.compact(_.map(scope.languages, function(l) {
+                  if (parseFloat(l.coords[0]) && parseFloat(l.coords[1])) {
+                      var c = 0;
+                      _.each(l.resources, function(r) {
+                          c += r;
+                      });
+                      var color;
+                      if (c < 20) {
+                          color = conf.markerColours[0].colour;
+                      } else if (c < 150) {
+                          color = conf.markerColours[1].colour;
+                      } else {
+                          color = conf.markerColours[2].colour;
+                      }
+
+                      var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
+                      var marker = leaflet.marker(new leaflet.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
+                          clickable: true,
+                          icon: leaflet.MakiMarkers.icon({
+                              icon: 'marker',
+                              color: color,
+                              size: 'l'
+                          }),
+                      });
+                      scope.markersByCode[l.code] = marker;
+                      marker.bindPopup(element[0]);
+                      marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
+                      return marker;
                   }
+              }));
 
-                  var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
-                  var marker = leaflet.marker(new leaflet.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
-                      clickable: true,
-                      icon: leaflet.MakiMarkers.icon({
-                          icon: 'marker',
-                          color: color,
-                          size: 'l'
-                      }),
-                  });
-                  scope.markersByCode[l.code] = marker;
-                  marker.bindPopup(element[0]);
-                  marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
-                  return marker;
-              }
-          }));
-
-          var markers = leaflet.markerClusterGroup({ disableClusteringAtZoom: 8 });
-          markers.addLayers(markerList);
-          scope.map.addLayer(markers);
+              scope.markers = leaflet.markerClusterGroup({ disableClusteringAtZoom: 8 });
+              scope.markers.addLayers(markerList);
+              scope.layer = scope.map.addLayer(scope.markers);
+          }
 
           // cancel the loading dialog
           $mdDialog.cancel();
