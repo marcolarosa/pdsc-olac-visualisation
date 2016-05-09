@@ -13,7 +13,8 @@ angular.module('appApp')
     'configuration',
     '$rootScope',
     '_',
-        function ($http, $mdSidenav, conf, $rootScope, _) {
+    'dataService',
+    function ($http, $mdSidenav, conf, $rootScope, _, ds) {
     return {
       templateUrl: 'views/browse.html',
       restrict: 'E',
@@ -72,7 +73,7 @@ angular.module('appApp')
                   scope.country = item.name;
                   scope.title = 'Browse languages in ' + scope.country;
                   scope.items = {
-                      list: _.sortBy(scope.countries[scope.country].language_data, function(l) { return l.name; }),
+                      list: _.sortBy(item.language_data, function(l) { return l.name; }),
                       what: 'language'
                   };
                   scope.error = false;
