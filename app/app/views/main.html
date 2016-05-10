@@ -48,11 +48,13 @@
 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="z-index: 10000;" md-is-open="config.controlsOpen">
         <md-content>
+            <md-toolbar layout="row" class="md-padding">
+                <div flex></div>
+                <md-button class="md-primary" ng-click="toggleSideNav()">close</md-button>
+            </md-toolbar>
             <div layout="column" layout-padding>
-                <md-content flex="50" layout-padding>
-                    <controls countries="datasets.countries" languages="datasets.languages"></controls>
-                    <browse countries="datasets.countries" languages="datasets.languages" is-visible="config.controlsOpen"></browse>
-                </md-content>    
+                <controls countries="datasets.countries" languages="datasets.languages"></controls>
+                <browse countries="datasets.countries" languages="datasets.languages" is-visible="config.controlsOpen"></browse>
             </div> 
         </md-content>
     </md-sidenav>

@@ -1,13 +1,10 @@
-<!-- toolbar -->
-<md-toolbar layout="row" class="md-padding">
-    <h5>Controls</h5>
-    <span flex></span>
-    <md-button class="md-primary" ng-click="close()">close</md-button>
-</md-toolbar>
-
-<div layout="column">
-    <div class="">Show only languages with the following resources</div>
-    <div class="md-padding">
+<div layout="column" layout-padding>
+    <div class="md-headline">Controls</div>
+    <div layout="row">
+    </div>
+    <md-divider></md-divider>
+    <div>Show only languages with the following resources</div>
+    <div>
         <div ng-repeat="resource in resourceTypes">
             <md-checkbox ng-click="filter(resource)">
                 {{resource}}

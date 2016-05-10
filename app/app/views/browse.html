@@ -1,10 +1,10 @@
-<!-- toolbar -->
-<md-toolbar layout="row" class="md-padding">
-    <md-button class="md-primary" ng-click="back()" ng-if="country">back</md-button>
-    <h5>{{title}}</h5>
-    <span flex></span>
-    <md-button class="md-primary" ng-click="close()">close</md-button>
-</md-toolbar>
+<div layout="column" layout-padding>
+    <div class="md-headline">{{title}}</div>
+    <div layout="row">
+        <md-button class="md-primary" ng-click="back()" ng-if="country">back</md-button>
+    </div>
+    <md-divider></md-divider>
+</div>
 
 <!-- list of countries / languages -->
 <md-content ng-if="!languageData">
@@ -12,7 +12,7 @@
         <md-list-item ng-click="show(items.what, item)" ng-repeat="item in items.list track by $index" aria-label="country list">
             <div layout="row" flex>
                 <span ng-if="!item.language_data" flex="10">
-                    <div style="background-color: {{item.colour}}; margin: 8px; height:25px; width: 25px; border-radius: 12px;">here</div> 
+                    <div style="background-color: {{item.colour}}; margin: 8px; height:25px; width: 25px; border-radius: 12px;"></div> 
                 </span>
                 <span flex="90">
                     {{item.name}}

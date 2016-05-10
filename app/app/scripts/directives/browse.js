@@ -98,10 +98,6 @@ angular.module('appApp')
               }
           };
 
-          scope.close = function() {
-              $mdSidenav('right').toggle();
-          };
-
       }
     };
   }]);

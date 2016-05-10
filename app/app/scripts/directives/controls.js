@@ -24,9 +24,6 @@ angular.module('appApp')
             scope.countries = resp.countries;
           };
 
-          scope.close = function() {
-              $mdSidenav('right').toggle();
-          };
       }
     };
   }]);
