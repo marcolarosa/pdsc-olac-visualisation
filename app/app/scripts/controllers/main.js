@@ -39,8 +39,10 @@ angular.module('appApp')
             return ds.get('countries');
         }).then(function(countries) {
             $scope.datasets.countries = countries;
+            ds.languageResourceCounts();
             ds.mapLanguagesToCountries();
-            ds.countryByKey();
+            ds.countryByName();
+            ds.languageByCode();
             ds.extractResourceTypes();
 
             $scope.dataLoaded = true;

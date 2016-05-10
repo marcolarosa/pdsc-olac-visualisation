@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('appApp')
-  .service('dataService', [ '$http', '_', function ($http, _) {
+  .service('dataService', [ 
+      '$http', 
+      '_', 
+      'configuration',
+      function ($http, _, conf) {
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
       ds.datasets = {};
@@ -52,8 +56,38 @@ angular.module('appApp')
           });
       };
 
-      ds.countryByKey = function() {
-          ds.datasets.countryByKey = _.groupBy(ds.datasets.countries, 'name');
+      ds.countryByName = function() {
+          ds.datasets.countryByName = {};
+          _.each(ds.datasets.countries, function(country) {
+              ds.datasets.countryByName[country.name] = country;
+          });
+      };
+
+      ds.languageByCode = function() {
+          ds.datasets.languageByCode = {};
+          _.each(ds.datasets.languages, function(language) {
+              ds.datasets.languageByCode[language.code] = language;
+          });
+      };
+
+      ds.languageResourceCounts = function() {
+          _.each(ds.datasets.languages, function(l) {
+              l.count = 0;
+              _.each(l.resources, function(r) {
+                  l.count += r;
+              });
+              l.colour = ds.languageColour(l);
+          });
+      };
+
+      ds.languageColour = function(l) {
+          if (l.count < 20) {
+              return conf.markerColours[0].colour;
+          } else if (l.count > 20 && l.count < 150) {
+              return conf.markerColours[1].colour;
+          } else {
+              return conf.markerColours[2].colour;
+          }
       };
 
       ds.extractResourceTypes = function() {
@@ -70,7 +104,7 @@ angular.module('appApp')
               ds.resourceFilters.push(resource);
           }
 
-          var languages, countries;
+          var languages, countries, countryKeys;
           if (_.isEmpty(ds.resourceFilters)) {
               languages = ds.datasets.languages;
               countries = ds.datasets.countries;
@@ -81,12 +115,25 @@ angular.module('appApp')
                   }
               }));
 
-              countries = [];
+              var languageCodes = _.keys(_.groupBy(languages, 'code'));
+              countries = [], countryKeys = [];
               _.each(languages, function(l) {
                   var c = ds.datasets.languageToCountryMapping[l.code];
                   if (c) {
-                      countries.push(ds.datasets.countryByKey[c[0]]);
+                      var country = ds.datasets.countryByName[c[0]];
+                      if (countryKeys.indexOf(country.name) === -1) {
+                          countries.push(country);
+                          countryKeys.push(country.name);
+                      }
                   }
+              });
+              _.each(countries, function(country) {
+                  var ld = _.map(country.language_data, function(l) {
+                      if (languageCodes.indexOf(l.code) !== -1) {
+                          return l;
+                      }
+                  });
+                  country.language_data = _.compact(ld);
               });
           }
 
