@@ -65,8 +65,8 @@ angular.module('appApp')
 
           scope.markers = leaflet.markerClusterGroup({ 
               chunkedLoading: true, 
-              chunkInterval: 25,
-              chunkDelay: 75,
+              chunkInterval: 50,
+              chunkDelay: 50,
               chunkProgress: scope.updateProgressBar 
           });
 
@@ -87,7 +87,6 @@ angular.module('appApp')
                           color = conf.markerColours[2].colour;
                       }
 
-                      //var element = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
                       var marker = leaflet.marker(new leaflet.LatLng(parseFloat(l.coords[0]), parseFloat(l.coords[1])), {
                           clickable: true,
                           icon: leaflet.MakiMarkers.icon({
@@ -97,8 +96,9 @@ angular.module('appApp')
                           }),
                       });
                       scope.markersByCode[l.code] = marker;
-                      //marker.bindPopup(element[0]);
-                      //marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
+                      var popup = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
+                      marker.bindPopup(popup[0]);
+                      marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
                       return marker;
                   }
               }));
