@@ -2,12 +2,9 @@
 
 angular.module('appApp')
   .directive('controls', [ 
-    '$mdSidenav',
-    'configuration',
-    '$rootScope',
-    '_',
     'dataService',
-    function ($mdSidenav, conf, $rootScope, _, ds) {
+    '$timeout', 
+    function (ds, $timeout) {
     return {
       templateUrl: 'views/controls.html',
       restrict: 'E',
@@ -19,9 +16,11 @@ angular.module('appApp')
           scope.resourceTypes = ds.datasets.resourceTypes;
 
           scope.filter = function(resource) {
-            var resp = ds.filter(resource);
-            scope.languages = resp.languages;
-            scope.countries = resp.countries;
+              $timeout(function() {
+                  var resp = ds.filter(resource);
+                  scope.languages = resp.languages;
+                  scope.countries = resp.countries;
+              }, 200);
           };
 
       }
