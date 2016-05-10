@@ -22,7 +22,7 @@ angular.module('appApp')
             var resp = ds.filter(resource);
             scope.languages = resp.languages;
             scope.countries = resp.countries;
-          }
+          };
 
           scope.close = function() {
               $mdSidenav('right').toggle();

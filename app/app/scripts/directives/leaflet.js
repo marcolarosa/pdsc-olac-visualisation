@@ -25,6 +25,7 @@ angular.module('appApp')
       },
       link: function postLink(scope) {
           scope.showLoadingIndicator = true;
+          scope.compiledPopups = {};
 
           scope.$on('zoom-to', function() {
               if (conf.latlng.lat && conf.latlng.lng) {
@@ -51,7 +52,7 @@ angular.module('appApp')
               noWrap: true
           }).addTo(scope.map);
 
-          scope.updateProgressBar = function(processed, total, elapsed) {
+          scope.updateProgressBar = function(processed, total) {
               scope.$apply(function() {
                   scope.progress = Math.round(processed/total*100);
 
@@ -96,8 +97,11 @@ angular.module('appApp')
                           }),
                       });
                       scope.markersByCode[l.code] = marker;
-                      var popup = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
-                      marker.bindPopup(popup[0]);
+                      if (!scope.compiledPopups[l.name]) {
+                          var popup = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
+                          scope.compiledPopups[l.name] = popup[0];
+                      }
+                      marker.bindPopup(scope.compiledPopups[l.name]);
                       marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
                       return marker;
                   }
@@ -105,7 +109,7 @@ angular.module('appApp')
 
               scope.markers.addLayers(scope.markerList);
               scope.map.addLayer(scope.markers);
-          }
+          };
 
           scope.moreInfo = function(language) {
               conf.selectedLanguage = language;

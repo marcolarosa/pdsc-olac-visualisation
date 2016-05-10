@@ -45,12 +45,12 @@ angular.module('appApp')
 
       ds.mapLanguagesToCountries = function() {
           ds.datasets.languageToCountryMapping = {};
-          _.each(ds.datasets.countries, function(country, key) {
+          _.each(ds.datasets.countries, function(country) {
               _.each(country.language_data, function(language) {
                   try {
                       ds.datasets.languageToCountryMapping[language.code].push(country.name);
                   } catch (e) {
-                      ds.datasets.languageToCountryMapping[language.code] = [country.name]
+                      ds.datasets.languageToCountryMapping[language.code] = [country.name];
                   }
               });
           });
@@ -95,7 +95,7 @@ angular.module('appApp')
               return _.keys(language.resources);
           });
           ds.datasets.resourceTypes = _.uniq(_.flatten(resources)).sort();
-      }
+      };
 
       ds.filter = function(resource) {
           if (_.contains(ds.resourceFilters, resource)) {
@@ -116,7 +116,8 @@ angular.module('appApp')
               }));
 
               var languageCodes = _.keys(_.groupBy(languages, 'code'));
-              countries = [], countryKeys = [];
+              countries = []; 
+              countryKeys = [];
               _.each(languages, function(l) {
                   var c = ds.datasets.languageToCountryMapping[l.code];
                   if (c) {
@@ -140,7 +141,7 @@ angular.module('appApp')
           return {
               'languages': languages,
               'countries': countries
-          }
+          };
       };
       return ds;
   }]);
