@@ -9,8 +9,6 @@
  */
 angular.module('appApp')
   .controller('AnalyseCtrl', [ 
-    '$scope',
-    function ($scope) {
+    function () {
     }
-
   ]);
