@@ -13,7 +13,7 @@ angular.module('appApp')
       restrict: 'E',
       scope: {
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
           scope.colours = conf.markerColours;
       }
     };

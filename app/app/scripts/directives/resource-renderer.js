@@ -20,7 +20,7 @@ angular.module('appApp')
           title: '@',
           resources: '='
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
           // fix the links on the way through
           scope.config = {
               pageSize: 10,
@@ -29,10 +29,12 @@ angular.module('appApp')
               hide: true,
               enablePagination: false,
               me: false
-          }
+          };
 
           scope.$on('close-item', function() {
-              if (!scope.config.me) scope.config.hide = true;
+              if (!scope.config.me) {
+                  scope.config.hide = true;
+              }
               scope.config.me = false;
           });
 
@@ -53,27 +55,29 @@ angular.module('appApp')
           scope.updateSet = function() {
               scope.config.numberFrom = scope.config.start + 1;
               scope.resourceSet = scope.resources.slice(scope.config.start, scope.config.start + scope.config.pageSize);
-          }
+          };
 
           scope.jumpToStart = function() {
               scope.config.start = 0;
               scope.updateSet();
-          }
+          };
           scope.back = function() {
               scope.config.start -= scope.config.pageSize;
-              if (scope.config.start < 0) scope.config.start = 0;
+              if (scope.config.start < 0) {
+                  scope.config.start = 0;
+              }
               scope.updateSet();
-          }
+          };
           scope.forward = function() {
               if (scope.config.start < (scope.resources.length - scope.config.pageSize)) {
                   scope.config.start += scope.config.pageSize;
               }
               scope.updateSet();
-          }
+          };
           scope.jumpToEnd = function() {
               scope.config.start = scope.resources.length - scope.config.pageSize;
               scope.updateSet();
-          }
+          };
 
           scope.toggleItem = function() {
               scope.config.me = true;
@@ -81,7 +85,7 @@ angular.module('appApp')
               $timeout(function() {
                   scope.config.hide =  !scope.config.hide;
               }, 10);
-          }
+          };
 
           scope.moreInformation = function(item) {
               $mdDialog.show({
@@ -94,12 +98,12 @@ angular.module('appApp')
                   parent: angular.element(document.body),
                   clickOutsideToClose: true,
                   fullscreen: true
-              })
-          }
+              });
+          };
 
           scope.close = function() {
               console.log('close the dialog');
-          }
+          };
 
 
       }

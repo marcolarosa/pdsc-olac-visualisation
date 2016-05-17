@@ -13,7 +13,12 @@ angular.module('appApp')
     '$http', 
     '$mdSidenav', 
     '$mdDialog',
-    function ($scope, $http, $mdSidenav, $mdDialog) {
+    '_',
+    'dataService',
+    '$timeout',
+    function ($scope, $http, $mdSidenav, $mdDialog, _, ds, $timeout) {
+        $scope.dataLoaded = false;
+        /*
         $mdDialog.show({
             template: '<div aria-label="loading" layout="column" layout-align="center center">' + 
                       '    <md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
@@ -21,42 +26,35 @@ angular.module('appApp')
             parent: angular.element(document.body),
             clickOutsideToClose: false
         });
-
-        $scope.config = {
-            controlsOpen: false
-        }
+        */
 
         $scope.datasets = {
             'languages': undefined,
             'countries': undefined,
             'regions': undefined
-        }
+        };
 
-        $http.get('data/index.json').then(function(resp) {
-            $scope.datasets.languages = _.compact(_.map(resp.data, function(language) {
-                try {
-                    var lat = parseFloat(language.coords[0]);
-                    var lng = parseFloat(language.coords[1]);
-                    return language;
-                } catch (e) {
-                    // do nothing
-                }
-            }));
-            console.log('Languages', $scope.datasets.languages);
-        });
-        /*
-        $http.get('data/regions.json').then(function(resp) {
-            console.log('Regions', resp.data);
-            $scope.datasets.regions = resp.data;
-        });
-        */
-        $http.get('data/countries.json').then(function(resp) {
-            $scope.datasets.countries = resp.data;
-            console.log('Countries', $scope.datasets.countries);
+        ds.get('languages').then(function(languages) {
+            $scope.datasets.languages = languages;
+            return ds.get('countries');
+        }).then(function(countries) {
+            $scope.datasets.countries = countries;
+            ds.languageResourceCounts();
+            ds.mapLanguagesToCountries();
+            ds.countryByName();
+            ds.languageByCode();
+            ds.extractResourceTypes();
+
+            $scope.dataLoaded = true;
+            console.log(ds.datasets);
+
+            $timeout(function() {
+                //$mdDialog.cancel();
+            }, 200);
         });
 
         $scope.toggleSideNav = function() {
             $mdSidenav('right').toggle();
-        }
+        };
 
   }]);
