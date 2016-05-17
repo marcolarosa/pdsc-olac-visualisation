@@ -1,8 +1,12 @@
-<div layout="column" layout-padding>
-    <plotly-bar-chart></plotly-bar-chart>
+<div layout="column" layout-padding ng-if="dataLoaded">
+    <plotly-bar-chart data="data" limit="data.limit"></plotly-bar-chart>
+    <md-slider flex min="0" max="{{data.xTotal}}" ng-model="data.limit" aria-label="graph limit"></md-slider>
+    <div class="md-caption">Use the slider to change the number of resources.</div>
+    <md-divider></md-divider>
     <div layout="row">
         <div layout="column">
-            <div class="md-subhead">controls</div>
+            <div class="md-subhead">
+            </div>
             <div class="md-subhead">set</div>
         </div>
     </div>
