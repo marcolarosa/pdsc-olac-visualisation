@@ -34,24 +34,15 @@ angular.module('appApp')
             'regions': undefined
         };
 
-        ds.get('languages').then(function(languages) {
-            $scope.datasets.languages = languages;
-            return ds.get('countries');
-        }).then(function(countries) {
-            $scope.datasets.countries = countries;
-            ds.languageResourceCounts();
-            ds.mapLanguagesToCountries();
-            ds.countryByName();
-            ds.languageByCode();
-            ds.extractResourceTypes();
-
+        if (_.isNull(ds.datasets.languages) || _.isNull(ds.datasets.countries)) {
+            ds.init().then(function() {
+                $scope.datasets = ds.datasets;
+                $scope.dataLoaded = true;
+            });
+        } else {
+            $scope.datasets = ds.datasets;
             $scope.dataLoaded = true;
-            console.log(ds.datasets);
-
-            $timeout(function() {
-                //$mdDialog.cancel();
-            }, 200);
-        });
+        }
 
         $scope.toggleSideNav = function() {
             $mdSidenav('right').toggle();

@@ -8,9 +8,30 @@ angular.module('appApp')
       function ($http, _, conf) {
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
-      ds.datasets = {};
+      ds.datasets = {
+          'languages': null,
+          'countries': null 
+      };
       ds.resourceFilters = [];
       //ds.slice = 10;
+      //
+      
+      ds.init = function() {
+          if (_.isNull(ds.datasets.languages) || _.isNull(ds.datasets.countries)) {
+              return ds.get('languages').then(function(languages) {
+                  ds.datasets.languages = languages;
+                  return ds.get('countries');
+              }).then(function(countries) {
+                  ds.datasets.countries = countries;
+                  ds.languageResourceCounts();
+                  ds.mapLanguagesToCountries();
+                  ds.countryByName();
+                  ds.languageByCode();
+                  ds.extractResourceTypes();
+                  console.log(ds.datasets);
+              });
+          }
+      }
 
       ds.get = function(what) {
           var url;
