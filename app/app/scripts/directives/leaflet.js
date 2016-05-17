@@ -97,12 +97,14 @@ angular.module('appApp')
                           }),
                       });
                       scope.markersByCode[l.code] = marker;
+                      /*
                       if (!scope.compiledPopups[l.name]) {
                           var popup = $compile("<span><h4>" + l.name + "<br/> (" + c + " resources)</h4><br/><a href='' ng-click='moreInfo(\"" + l.code + "\")'>more information</a></span>")(scope);
                           scope.compiledPopups[l.name] = popup[0];
                       }
                       marker.bindPopup(scope.compiledPopups[l.name]);
                       marker.bindLabel(l.name, { 'noHide': true, 'direction': 'auto' });
+                      */
                       return marker;
                   }
               }));
