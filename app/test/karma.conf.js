@@ -35,6 +35,7 @@ module.exports = function(config) {
       'bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
       'bower_components/Leaflet.MakiMarkers/Leaflet.MakiMarkers.js',
       'bower_components/angular-material/angular-material.js',
+      'bower_components/plotly.js/dist/plotly.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
