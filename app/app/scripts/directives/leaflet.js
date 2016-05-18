@@ -109,8 +109,10 @@ angular.module('appApp')
 
               scope.markers.addLayers(scope.markerList);
               scope.map.addLayer(scope.markers);
-              var group = new L.featureGroup(scope.markerList);
-              scope.map.fitBounds(group.getBounds());
+              $timeout(function() {
+                  var group = new L.featureGroup(scope.markerList);
+                  scope.map.fitBounds(group.getBounds());
+              }, 2500);
           };
 
           scope.moreInfo = function(language) {
