@@ -48,4 +48,8 @@ angular.module('appApp')
             $mdSidenav('right').toggle();
         };
 
+        $scope.reset = function() {
+            ds.reset();
+        }
+
   }]);
