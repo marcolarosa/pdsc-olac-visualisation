@@ -13,6 +13,7 @@ angular.module('appApp')
         'dataService',
         '_',
         function ($scope, ds, _) {
+            ds.reset();
 
             $scope.reset = function() {
                 $scope.data = {

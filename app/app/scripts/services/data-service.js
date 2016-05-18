@@ -17,8 +17,11 @@ angular.module('appApp')
       }
       ds.resourceFilters = [];
       ds.countryFilter = [];
-      //ds.slice = 10;
-      //
+
+      ds.reset = function() {
+          ds.datasets.filtered.languages = angular.copy(ds.datasets.languages);
+          ds.datasets.filtered.countries = angular.copy(ds.datasets.countries);
+      };
       
       ds.init = function() {
           if (_.isNull(ds.datasets.languages) || _.isNull(ds.datasets.countries)) {
