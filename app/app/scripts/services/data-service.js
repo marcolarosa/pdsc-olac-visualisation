@@ -16,6 +16,7 @@ angular.module('appApp')
       ds.datasets.filtered = {
       }
       ds.resourceFilters = [];
+      ds.countryFilter = [];
       //ds.slice = 10;
       //
       
@@ -123,7 +124,7 @@ angular.module('appApp')
           ds.datasets.resourceTypes = _.uniq(_.flatten(resources)).sort();
       };
 
-      ds.filter = function(resource) {
+      ds.filterByResource = function(resource) {
           if (_.contains(ds.resourceFilters, resource)) {
               ds.resourceFilters = _.without(ds.resourceFilters, resource);
           } else {
@@ -168,5 +169,34 @@ angular.module('appApp')
           $rootScope.$broadcast('dataset filtered');
 
       };
+
+      ds.filterByCountry = function(country) {
+          if (_.contains(ds.countryFilter, country)) {
+              ds.countryFilter = _.without(ds.countryFilter, country);
+          } else {
+              ds.countryFilter.push(country);
+          }
+          var languages, countries, countryKeys;
+          if (_.isEmpty(ds.countryFilter)) {
+              languages = ds.datasets.languages;
+              countries = ds.datasets.countries;
+          } else {
+              countries = [ country ];
+              languages = _.compact(_.map(ds.datasets.languages, function(language) {
+                  try {
+                      if (ds.datasets.languageToCountryMapping[language.code][0] === country.name) {
+                          return language;
+                      }
+                  } catch (e) {
+                      // ignore
+                  }
+              }));
+          }
+          console.log(languages);
+          ds.datasets.filtered.languages = languages;
+          ds.datasets.filtered.countries = countries;
+          $rootScope.$broadcast('dataset filtered');
+      };
+
       return ds;
   }]);

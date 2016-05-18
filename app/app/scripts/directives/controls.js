@@ -4,7 +4,8 @@ angular.module('appApp')
   .directive('controls', [ 
     'dataService',
     '$timeout', 
-    function (ds, $timeout) {
+    '_',
+    function (ds, $timeout, _) {
     return {
       templateUrl: 'views/controls.html',
       restrict: 'E',
@@ -12,10 +13,20 @@ angular.module('appApp')
       },
       link: function postLink(scope) {
           scope.resourceTypes = ds.datasets.resourceTypes;
+          scope.countries = _.sortBy(ds.datasets.filtered.countries, 'name');
+          scope.$on('dataset filtered', function() {
+              scope.countries = _.sortBy(ds.datasets.filtered.countries, 'name');
+          }, true);
 
-          scope.filter = function(resource) {
+          scope.filterByResource = function(resource) {
               $timeout(function() {
-                  ds.filter(resource);
+                  ds.filterByResource(resource);
+              }, 200);
+          };
+
+          scope.filterByCountry = function(country) {
+              $timeout(function() {
+                  ds.filterByCountry(country);
               }, 200);
           };
 
