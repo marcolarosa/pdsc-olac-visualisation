@@ -1,0 +1,8 @@
+<div layout="column" layout-fill>
+    <ol class="no-margin">
+        <li ng-repeat="language in languages">
+            <strong>{{language.code}}</strong>: <em>{{language.name}}</em>
+            <span ng-repeat="(k,v) in language.resources">{{k}}: {{v}} </span>
+        </li>
+    </ol>
+</div>

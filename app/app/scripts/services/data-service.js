@@ -5,13 +5,16 @@ angular.module('appApp')
       '$http', 
       '_', 
       'configuration',
-      function ($http, _, conf) {
+      '$rootScope',
+      function ($http, _, conf, $rootScope) {
       // AngularJS will instantiate a singleton by calling "new" on this function
       var ds = {};
       ds.datasets = {
           'languages': null,
           'countries': null 
       };
+      ds.datasets.filtered = {
+      }
       ds.resourceFilters = [];
       //ds.slice = 10;
       //
@@ -57,8 +60,10 @@ angular.module('appApp')
               }));
               if (ds.slice !== undefined) {
                   ds.datasets[what] = data.slice(0,ds.slice);
+                  ds.datasets.filtered[what] = data.slice(0,ds.slice);
               } else {
                   ds.datasets[what] = data;
+                  ds.datasets.filtered[what] = data;
               }
               return ds.datasets[what];
           });
@@ -158,11 +163,10 @@ angular.module('appApp')
                   country.language_data = _.compact(ld);
               });
           }
+          ds.datasets.filtered.languages = languages;
+          ds.datasets.filtered.countries = countries;
+          $rootScope.$broadcast('dataset filtered');
 
-          return {
-              'languages': languages,
-              'countries': countries
-          };
       };
       return ds;
   }]);
