@@ -2,12 +2,12 @@
     <md-content>
         <md-card>
             <md-card-content>
-                <leaflet languages="datasets.languages" ng-if="datasets.languages"></leaflet>
+                <leaflet languages="datasets.filtered.languages"></leaflet>
             </md-card-content>
         </md-card>
 
         <div layout="row" layout-padding>
-            <marker-legend class="marker-legend" ng-if='datasets.languages'></marker-legend>
+            <marker-legend class="marker-legend" ng-if='datasets.filtered.languages'></marker-legend>
             <div class="" flex='40'>
                 <div layout="column">
                     <div>
@@ -54,8 +54,7 @@
                 <md-button class="md-primary" ng-click="toggleSideNav()">close</md-button>
             </md-toolbar>
             <div layout="column" layout-padding>
-                <!--<controls countries="datasets.countries" languages="datasets.languages"></controls>-->
-                <browse countries="datasets.countries" languages="datasets.languages" is-visible="config.controlsOpen"></browse>
+                <browse countries="datasets.filtered.countries" languages="datasets.filtered.languages" is-visible="config.controlsOpen"></browse>
             </div> 
         </md-content>
     </md-sidenav>
