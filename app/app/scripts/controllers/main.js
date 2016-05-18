@@ -16,7 +16,8 @@ angular.module('appApp')
     '_',
     'dataService',
     '$timeout',
-    function ($scope, $http, $mdSidenav, $mdDialog, _, ds, $timeout) {
+    '$location',
+    function ($scope, $http, $mdSidenav, $mdDialog, _, ds, $timeout, $location) {
         $scope.dataLoaded = false;
         /*
         $mdDialog.show({
@@ -50,6 +51,11 @@ angular.module('appApp')
 
         $scope.reset = function() {
             ds.reset();
-        }
+        };
+
+        $scope.jumpToAnalyse = function() {
+            var p = $location.path();
+            $location.path(p + 'analyse');
+        };
 
   }]);

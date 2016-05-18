@@ -5,7 +5,8 @@ angular.module('appApp')
     'dataService',
     '$timeout', 
     '_',
-    function (ds, $timeout, _) {
+    '$location',
+    function (ds, $timeout, _, $location) {
     return {
       templateUrl: 'views/controls.html',
       restrict: 'E',
@@ -28,6 +29,11 @@ angular.module('appApp')
               $timeout(function() {
                   ds.filterByCountry(country);
               }, 200);
+          };
+
+          scope.jumpToMap = function() {
+              var p = $location.path();
+              $location.path(p.split('/analyse')[0]);
           };
 
       }
