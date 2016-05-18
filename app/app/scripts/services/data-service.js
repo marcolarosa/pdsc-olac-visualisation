@@ -184,7 +184,7 @@ angular.module('appApp')
               countries = [ country ];
               languages = _.compact(_.map(ds.datasets.languages, function(language) {
                   try {
-                      if (ds.datasets.languageToCountryMapping[language.code][0] === country.name) {
+                      if (ds.datasets.languageToCountryMapping[language.code].indexOf(country.name) !== -1) {
                           return language;
                       }
                   } catch (e) {
@@ -192,7 +192,6 @@ angular.module('appApp')
                   }
               }));
           }
-          console.log(languages);
           ds.datasets.filtered.languages = languages;
           ds.datasets.filtered.countries = countries;
           $rootScope.$broadcast('dataset filtered');
