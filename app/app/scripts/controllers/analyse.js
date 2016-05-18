@@ -20,6 +20,16 @@ angular.module('appApp')
                 limit: 50,
             }
 
+            $scope.processData = function() {
+                $scope.byCount = _.groupBy(ds.datasets.languages, 'count');
+                _.each($scope.byCount, function(value, key) {
+                    $scope.data.x.push(key);
+                    $scope.data.y.push(value.length);
+                });
+
+                $scope.data.xTotal = $scope.data.x.length;
+            }
+
             if (_.isNull(ds.datasets.languages) || _.isNull(ds.datasets.countries)) {
                 ds.init().then(function() {
                     $scope.datasets = ds.datasets;
@@ -32,14 +42,5 @@ angular.module('appApp')
                 $scope.dataLoaded = true;
             }
 
-            $scope.processData = function() {
-                $scope.byCount = _.groupBy(ds.datasets.languages, 'count');
-                _.each($scope.byCount, function(value, key) {
-                    $scope.data.x.push(key);
-                    $scope.data.y.push(value.length);
-                });
-
-                $scope.data.xTotal = $scope.data.x.length;
-            }
         }
     ]);
