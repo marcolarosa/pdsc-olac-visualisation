@@ -16,7 +16,7 @@ angular.module('appApp')
       },
       'markerColours': [ 
         {
-            colour: '#ea1540', 
+            colour: '#CFD8DC', 
             label: 'less than 20 resources'
         },
         {
