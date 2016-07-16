@@ -16,15 +16,15 @@ angular.module('appApp')
       },
       'markerColours': [ 
         {
-            colour: '#CFD8DC', 
-            label: 'less than 20 resources'
+            colour: '#212121', 
+            label: 'fewer than 20 resources'
         },
         {
-            colour: '#ff8c00', 
+            colour: '#BDBDBD', 
             label:  'between 20 and 150 resources'
         },
         {
-            colour: '#2eb82e',
+            colour: '#FFEB3B',
             label: 'more than 150 resources'
         }
       ]
