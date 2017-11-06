@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 data
+=======
+app/.tmp/
+app/app/
+app/bower_components/
+app/dist/
+app/node_modules/
+>>>>>>> 2ddb0b37d03c0fb305d22f53d53aaf971f79067c
