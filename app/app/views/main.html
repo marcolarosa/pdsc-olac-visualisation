@@ -1,62 +1,106 @@
-<div ng-if='dataLoaded'>
-    <md-content>
-        <md-card>
-            <md-card-content>
-                <leaflet languages="datasets.filtered.languages"></leaflet>
-            </md-card-content>
-        </md-card>
+<div ng-if="dataLoaded">
+  <md-content>
+    <md-card>
+      <md-card-content>
+        <leaflet languages="datasets.filtered.languages"></leaflet>
+      </md-card-content>
+    </md-card>
 
-        <div layout="row" layout-padding>
-            <marker-legend class="marker-legend" ng-if='datasets.filtered.languages'></marker-legend>
-            <div class="" flex='40'>
-                <div layout="column">
-                    <div>
-                        <a href="http://www.dynamicsoflanguage.edu.au/">
-                            <img src="http://www.dynamicsoflanguage.edu.au/design/main/images/logo-2x.png"
-                            style="width: 70%;">
-                        </a>
-                    </div>
-                    <div class="md-caption">
-                        This work was done by 
-                        <a href="https://github.com/MLR-au" target="_blank">Marco La Rosa</a>
-                        in a project led by 
-                        <a href="http://languages-linguistics.unimelb.edu.au/about/staff/dr-nick-thieberger" target="_blank">Nick 
-                        Thieberger</a> at the University of Melbourne as part of 
-                        <a href="http://www.dynamicsoflanguage.edu.au/" target="_blank">
-                            Centre of Excellence for the Dynamics of Language 
-                        </a>
-                        (ARC grant CE140100041).
-                    </div>
-                </div>
-            </div>
-            <div class="help-text" flex='50'>
-                This map shows the number of items available in archives participating in the 
-                <a href="http://www.language-archives.org/" target="_blank">Open Language Archives Community</a> for any given 
-                language. The main aim of these archives is to make available information about the smaller languages of the 
-                world. Clearly, major languages have enormous amounts of information available, but for many of the world's 
-                languages, as will be seen on this site, little or nothing has been recorded or is available via one of the participating archives.
-            </div>
+    <div layout="row" layout-padding>
+      <marker-legend
+        class="marker-legend"
+        ng-if="datasets.filtered.languages"
+      ></marker-legend>
+      <div class="" flex="40">
+        <div layout="column">
+          <div>
+            <a href="http://www.dynamicsoflanguage.edu.au/">
+              <img
+                src="http://www.dynamicsoflanguage.edu.au/design/main/images/logo-2x.png"
+                style="width: 70%;"
+              />
+            </a>
+          </div>
+          <div class="md-caption">
+            This work was done by
+            <a href="https://github.com/MLR-au" target="_blank"
+              >Marco La Rosa</a
+            >
+            in a project led by
+            <a
+              href="http://languages-linguistics.unimelb.edu.au/about/staff/dr-nick-thieberger"
+              target="_blank"
+              >Nick Thieberger</a
+            >
+            at the University of Melbourne as part of
+            <a href="http://www.dynamicsoflanguage.edu.au/" target="_blank">
+              Centre of Excellence for the Dynamics of Language
+            </a>
+            (ARC grant CE140100041).
+          </div>
         </div>
-    </md-content>
-    <md-fab-speed-dial class="md-fab-bottom-right" style="z-index: 10000;">
-        <md-fab-trigger>
-            <md-button aria-label="menu" class="md-fab md-warn" ng-click="toggleSideNav()">
-                <i class="material-icons md-48">add</i>
-            </md-button>
-        </md-fab-trigger>
-    </md-fab-speed-dial>
+      </div>
+      <div class="help-text" flex="50">
+        <p>
+          This map shows the number of items available in archives participating
+          in the
+          <a href="http://www.language-archives.org/" target="_blank"
+            >Open Language Archives Community</a
+          >
+          for any given language. The main aim of these archives is to make
+          available information about the smaller languages of the world.
+          Clearly, major languages have enormous amounts of information
+          available, but for many of the world's languages, as will be seen on
+          this site, little or nothing has been recorded or is available via one
+          of the participating archives.
+        </p>
+        <p>
+          <a href="#/analyse">
+            A graph summarising all the data presented in this visualisation can
+            be seen here.
+          </a>
+          The main aim of these archives is to make available information about
+          the smaller languages of the world.
+        </p>
+      </div>
+    </div>
+  </md-content>
+  <md-fab-speed-dial class="md-fab-bottom-right" style="z-index: 10000;">
+    <md-fab-trigger>
+      <md-button
+        aria-label="menu"
+        class="md-fab md-warn"
+        ng-click="toggleSideNav()"
+      >
+        <i class="material-icons md-48">add</i>
+      </md-button>
+    </md-fab-trigger>
+  </md-fab-speed-dial>
 
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="z-index: 10000;" md-is-open="config.controlsOpen">
-        <md-content>
-            <md-toolbar layout="row" class="md-padding">
-                <md-button class="md-primary" ng-click="jumpToAnalyse()">Data Analysis</md-button>
-                <div flex></div>
-                <md-button class="md-primary" ng-click="reset()">reset</md-button>
-                <md-button class="md-primary" ng-click="toggleSideNav()">close</md-button>
-            </md-toolbar>
-            <div layout="column" layout-padding>
-                <browse countries="datasets.filtered.countries" languages="datasets.filtered.languages" is-visible="config.controlsOpen"></browse>
-            </div> 
-        </md-content>
-    </md-sidenav>
+  <md-sidenav
+    class="md-sidenav-right md-whiteframe-z2"
+    md-component-id="right"
+    style="z-index: 10000;"
+    md-is-open="config.controlsOpen"
+  >
+    <md-content>
+      <md-toolbar layout="row" class="md-padding">
+        <md-button class="md-primary" ng-click="jumpToAnalyse()"
+          >Data Analysis</md-button
+        >
+        <div flex></div>
+        <md-button class="md-primary" ng-click="reset()">reset</md-button>
+        <md-button class="md-primary" ng-click="toggleSideNav()"
+          >close</md-button
+        >
+      </md-toolbar>
+      <div layout="column" layout-padding>
+        <browse
+          countries="datasets.filtered.countries"
+          languages="datasets.filtered.languages"
+          is-visible="config.controlsOpen"
+        ></browse>
+      </div>
+    </md-content>
+  </md-sidenav>
 </div>

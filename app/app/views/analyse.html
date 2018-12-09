@@ -1,14 +1,19 @@
 <div layout="column" layout-padding ng-if="dataLoaded">
-    <div layout="row" layout-align="center center">
-        <div>
-            <plotly-bar-chart data="data"></plotly-bar-chart>
-            <md-slider flex min="0" max="{{data.xTotal}}" ng-model="data.limit" aria-label="graph limit"></md-slider>
-            <div class="md-caption">Use the slider to change the number of resources to display.</div>
-        </div>
+  <div layout="row" layout-align="center center">
+    <div>
+      <plotly-bar-chart data="data"></plotly-bar-chart>
+      <md-slider
+        flex
+        min="0"
+        max="{{data.xTotal}}"
+        ng-model="data.limit"
+        aria-label="graph limit"
+      ></md-slider>
+      <div class="md-caption">
+        Use the slider to change the number of resources to display.
+      </div>
     </div>
-    <md-divider></md-divider>
-    <div layout="row" layout-align="center center">
-        <controls></controls>
-    </div>
+  </div>
+  <md-divider></md-divider>
+  <div layout="row" layout-align="center center"><controls></controls></div>
 </div>
-

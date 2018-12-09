@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc overview
@@ -9,38 +9,28 @@
  * Main module of the application.
  */
 angular
-  .module('appApp', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngMaterial',
-    'underscore',
-    'leaflet',
-  ])
+  .module("appApp", ["ngRoute", "ngMaterial", "underscore", "leaflet"])
   .config([
-    '$routeProvider',
-    '$logProvider',
-  function ($routeProvider, $logProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/analyse', {
-        templateUrl: 'views/analyse.html',
-        controller: 'AnalyseCtrl',
-        controllerAs: 'analyse'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+    "$routeProvider",
+    "$logProvider",
+    "$locationProvider",
+    function($routeProvider, $logProvider, $locationProvider) {
+      $routeProvider
+        .when("/", {
+          templateUrl: "views/main.html",
+          controller: "MainCtrl",
+          controllerAs: "main"
+        })
+        .when("/analyse", {
+          templateUrl: "views/analyse.html",
+          controller: "AnalyseCtrl",
+          controllerAs: "analyse"
+        })
+        .otherwise({
+          redirectTo: "/"
+        });
 
-      // disable debug logging
       $logProvider.debugEnabled(false);
-
-  }]);
+      $locationProvider.hashPrefix("");
+    }
+  ]);

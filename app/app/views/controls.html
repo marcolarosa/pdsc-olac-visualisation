@@ -1,27 +1,37 @@
 <div layout="row" layout-padding>
-    <div layout="column" layout-padding>
-        <div class="md-subhead">Filter languages with the following resources</div>
-        <md-divider></md-divider>
-        <div>
-            <div ng-repeat="resource in resourceTypes">
-                <md-checkbox ng-click="filterByResource(resource)">
-                    {{resource}}
-                </md-checkbox>
-            </div>
-        </div>
-    </div>
-    <div layout="column" layout-padding>
-        <div class="md-subhead">Filter languages by country</div>
-        <md-divider></md-divider>
-        <div style="position: relative; height: 300px; overflow: scroll;">
-            <div ng-repeat="country in countries">
-                <md-checkbox ng-click="filterByCountry(country)">
-                    {{country.name}}
-                </md-checkbox>
-            </div>
-        </div>
-    </div>
+  <div layout="column" layout-padding>
+    <div class="md-subhead">Filter languages with the following resources</div>
+    <md-divider></md-divider>
     <div>
-        <md-button class="md-primary" ng-click="jumpToMap()">View on map</md-button>
+      <div ng-repeat="resource in resourceTypes track by $index">
+        <md-checkbox
+          ng-model="data.selectedResources[resource]"
+          ng-true-value="{{$index}}"
+          ng-false-value="undefined"
+          ng-click="filterByResource(resource)"
+        >
+          {{ resource }}
+        </md-checkbox>
+      </div>
     </div>
+  </div>
+  <div layout="column" layout-padding>
+    <div class="md-subhead">Filter languages by country</div>
+    <md-divider></md-divider>
+    <div style="position: relative; height: 300px; overflow: scroll;">
+      <div ng-repeat="country in countries">
+        <md-checkbox
+          ng-model="data.selectedCountry[country.url]"
+          ng-true-value="{{country}}"
+          ng-false-value="undefined"
+          ng-click="filterByCountry(country)"
+        >
+          {{ country.name }}
+        </md-checkbox>
+      </div>
+    </div>
+  </div>
+  <div>
+    <md-button class="md-primary" ng-click="jumpToMap()">View on map</md-button>
+  </div>
 </div>

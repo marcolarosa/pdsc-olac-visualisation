@@ -1,0 +1,23 @@
+version: "2"
+
+volumes:
+  node_modules:
+  bower_components:
+
+services:
+  olacvis:
+    image: node:10-stretch
+    hostname: olacvis
+    tty: true
+    environment:
+      TERM: "xterm-256color"
+      NODE_ENV: "development"
+    working_dir: /srv/olacvis
+    volumes:
+      - ~/src/pdsc/olac-vis/app:/srv/olacvis:delegated
+      - node_modules:/srv/olacvis/node_modules:delegated
+      - bower_components:/srv/olacvis/bower_components:delegated
+    command: "npm run serve"
+    ports:
+      - 9000:9000
+      - 35729:35729

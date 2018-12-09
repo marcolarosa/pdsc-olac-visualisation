@@ -1,9 +1,10 @@
-<<<<<<< HEAD
-data
-=======
 app/.tmp/
-app/app/
 app/bower_components/
 app/dist/
 app/node_modules/
->>>>>>> 2ddb0b37d03c0fb305d22f53d53aaf971f79067c
+app/app/data
+app/.tmp
+app/.sass-cache
+
+process-language-pages/data/
+process-language-pages/update.log
