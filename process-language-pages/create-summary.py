@@ -19,6 +19,8 @@ class CreateSummary:
         for root, dirs, files in os.walk(self.languages):
             for fname in files:
                 log.info("Processing: %s" % fname);
+                if fname in [ 'regions.json', 'index.json', 'countries.json' ]:
+                    continue
 
                 with open(os.path.join(root, fname), 'r') as f:
                     data = json.loads(f.read())
@@ -118,11 +120,6 @@ if __name__ == "__main__":
 
     # get the logger
     log = logging.getLogger('LANGUAGE_PROCESSOR')
-
-    for summary in [ 'index.json', 'regions.json', 'countries.json' ]:
-        summary_file = os.path.join(args.languages, summary)
-        if os.path.exists(summary_file):
-            os.remove(summary_file)
 
     # create summary file
     s = CreateSummary(args.languages)
